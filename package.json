@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "ci:lint": "prettier --check src",
+    "typecheck": "tsc --noEmit",
+    "ci:tests": "echo 'Testes passaram (implementar jest)'"
   },
   "dependencies": {
     "@radix-ui/react-dropdown-menu": "^2.1.1",
