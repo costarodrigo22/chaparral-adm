@@ -1,11 +1,71 @@
-import ThemeSwitcher from '@/components/ThemeSwitcher';
+import { Input } from '@/components/ui/Input';
+import { Label } from '@/components/ui/Label';
+import imageLogin from '@/assets/image-login.svg';
+import { Button } from '@/components/ui/Button';
+import { Eye, EyeOff } from 'lucide-react';
+import useLogin from './useLogin';
 
 export default function Login() {
-  return (
-    <div>
-      <span>login</span>
+  const { showPassword, handleShowPassword } = useLogin();
 
-      <ThemeSwitcher />
+  return (
+    <div className="w-full h-screen flex items-center justify-center relative">
+      <img
+        src={imageLogin}
+        style={{ height: '100%' }}
+        className="absolute left-0"
+      />
+      <div className="w-full max-w-[450px] border border-slate-300 rounded-md p-7 flex items-center justify-center flex-col gap-5 z-10 bg-white">
+        <div className="w-full flex flex-col justify-start">
+          <span className="font-bold text-xl">LOGIN ÍAÇA</span>
+
+          <small>
+            Faça login para acessar o painel administrativo do site.
+          </small>
+        </div>
+
+        <form className="w-full flex flex-col gap-3">
+          <Label htmlFor="Usuário">Usuário</Label>
+          <Input id="Usuário" placeholder="cpf" />
+
+          <div className="w-full relative">
+            <Label htmlFor="Senha">Senha</Label>
+            <Input
+              type={showPassword ? 'text' : 'password'}
+              id="Senha"
+              placeholder="Digite sua senha"
+            />
+
+            {showPassword && (
+              <EyeOff
+                data-testid="toggle-pass"
+                size={35}
+                color="#a7a7a7"
+                className="absolute top-7 right-0 items-center pr-3"
+                onClick={handleShowPassword}
+              />
+            )}
+
+            {!showPassword && (
+              <Eye
+                data-testid="toggle-pass-show"
+                size={35}
+                color="#a7a7a7"
+                className="absolute top-7 right-0 items-center pr-3"
+                onClick={handleShowPassword}
+              />
+            )}
+          </div>
+
+          <div className="w-full flex justify-end">
+            <span className="text-sm text-black font-medium underline cursor-pointer">
+              Esqueci a senha
+            </span>
+          </div>
+
+          <Button>Acessar</Button>
+        </form>
+      </div>
     </div>
   );
 }
