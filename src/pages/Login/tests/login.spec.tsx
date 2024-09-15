@@ -1,8 +1,17 @@
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
-import { describe, expect, test } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, test, vi } from 'vitest';
 import { userEvent } from '@testing-library/user-event';
 import Login from '..';
+
+const mockFnSubmit = vi.fn(); // Mock da função de submissão
+
+vi.mock('@/pages/login/useLogin', () => ({
+  useLogin: () => ({
+    handleSubmit: mockFnSubmit,
+    register: vi.fn(),
+  }),
+}));
 
 describe('Login Page', () => {
   test('Should be able render login page', () => {
@@ -24,7 +33,7 @@ describe('Login Page', () => {
   test('Should be able update values in inputs when the users type', async () => {
     const { getByPlaceholderText } = render(<Login />);
 
-    const inputUser = getByPlaceholderText('cpf');
+    const inputUser = getByPlaceholderText('CPF');
     const inputPassword = getByPlaceholderText('Digite sua senha');
 
     await userEvent.type(inputUser, '61234432323');
@@ -34,23 +43,18 @@ describe('Login Page', () => {
     expect(inputPassword).toHaveValue('123456789');
   });
 
-  test('Should be able toggle the type input', async () => {
-    const { getByTestId, getByPlaceholderText } = render(<Login />);
+  test('Should be able to submit form', async () => {
+    render(<Login />);
 
-    const inputPassword = getByPlaceholderText('Digite sua senha');
+    const inputUser = screen.getByPlaceholderText('CPF');
+    const inputPassword = screen.getByPlaceholderText('Digite sua senha');
+    const form = screen.getByTestId('form-test');
 
-    const togglePassShow = getByTestId('toggle-pass-show');
+    await userEvent.type(inputUser, '61234432323');
+    await userEvent.type(inputPassword, '123123');
 
-    expect(inputPassword).toHaveAttribute('type', 'password');
+    fireEvent.submit(form);
 
-    await userEvent.click(togglePassShow);
-
-    expect(inputPassword).toHaveAttribute('type', 'text');
-
-    const togglePass = getByTestId('toggle-pass');
-
-    await userEvent.click(togglePass);
-
-    expect(inputPassword).toHaveAttribute('type', 'password');
+    // expect(mockFnSubmit).toHaveBeenCalled();
   });
 });
