@@ -3,10 +3,11 @@ import { Label } from '@/components/ui/Label';
 import imageLogin from '@/assets/image-login.svg';
 import { Button } from '@/components/ui/Button';
 import { Eye, EyeOff } from 'lucide-react';
-import useLogin from './useLogin';
+import { useLogin } from './useLogin';
 
 export default function Login() {
-  const { showPassword, handleShowPassword } = useLogin();
+  const { showPassword, register, handleSubmit, handleShowPassword } =
+    useLogin();
 
   return (
     <div className="w-full h-screen flex items-center justify-center relative">
@@ -24,15 +25,20 @@ export default function Login() {
           </small>
         </div>
 
-        <form className="w-full flex flex-col gap-3">
+        <form
+          onSubmit={() => handleSubmit()}
+          className="w-full flex flex-col gap-3"
+          data-testid="form-test"
+        >
           <Label htmlFor="Usuário">Usuário</Label>
-          <Input id="Usuário" placeholder="cpf" />
+          <Input id="Usuário" {...register('cpf')} placeholder="CPF" />
 
           <div className="w-full relative">
             <Label htmlFor="Senha">Senha</Label>
             <Input
-              type={showPassword ? 'text' : 'password'}
               id="Senha"
+              {...register('password')}
+              type={showPassword ? 'text' : 'password'}
               placeholder="Digite sua senha"
             />
 
@@ -63,7 +69,7 @@ export default function Login() {
             </span>
           </div>
 
-          <Button>Acessar</Button>
+          <Button type="submit">Acessar</Button>
         </form>
       </div>
     </div>
