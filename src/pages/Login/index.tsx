@@ -6,8 +6,14 @@ import { Eye, EyeOff } from 'lucide-react';
 import { useLogin } from './useLogin';
 
 export default function Login() {
-  const { showPassword, register, handleSubmit, handleShowPassword } =
-    useLogin();
+  const {
+    showPassword,
+    errors,
+    isPending,
+    register,
+    handleSubmit,
+    handleShowPassword,
+  } = useLogin();
 
   return (
     <div className="w-full h-screen flex items-center justify-center relative">
@@ -26,12 +32,19 @@ export default function Login() {
         </div>
 
         <form
-          onSubmit={() => handleSubmit()}
+          onSubmit={handleSubmit}
           className="w-full flex flex-col gap-3"
           data-testid="form-test"
         >
-          <Label htmlFor="Usuário">Usuário</Label>
-          <Input id="Usuário" {...register('cpf')} placeholder="CPF" />
+          <div className="flex flex-col gap-1">
+            <Label htmlFor="Usuário">Usuário</Label>
+            <Input id="Usuário" {...register('email')} placeholder="Email" />
+            {errors.email && (
+              <span className="text-red-500 text-xs ">
+                {errors.email.message}
+              </span>
+            )}
+          </div>
 
           <div className="w-full relative">
             <Label htmlFor="Senha">Senha</Label>
@@ -41,6 +54,11 @@ export default function Login() {
               type={showPassword ? 'text' : 'password'}
               placeholder="Digite sua senha"
             />
+            {errors.password && (
+              <span className="text-red-500 text-xs ">
+                {errors.password.message}
+              </span>
+            )}
 
             {showPassword && (
               <EyeOff
@@ -63,13 +81,15 @@ export default function Login() {
             )}
           </div>
 
-          <div className="w-full flex justify-end">
+          {/* <div className="w-full flex justify-end">
             <span className="text-sm text-black font-medium underline cursor-pointer">
               Esqueci a senha
             </span>
-          </div>
+          </div> */}
 
-          <Button type="submit">Acessar</Button>
+          <Button disabled={isPending} type="submit">
+            Acessar
+          </Button>
         </form>
       </div>
     </div>
