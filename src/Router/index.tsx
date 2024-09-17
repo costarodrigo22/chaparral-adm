@@ -11,8 +11,10 @@ export function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route element={<AuthGuard isPrivate={false} />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
 
         <Route element={<AuthGuard isPrivate />}>
           <Route element={<AppLayout />}>

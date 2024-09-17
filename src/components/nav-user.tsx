@@ -16,6 +16,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useAuth } from '@/app/hooks/useAuth';
 
 export function NavUser({
   user,
@@ -26,6 +27,8 @@ export function NavUser({
     avatar: string;
   };
 }) {
+  const { signout } = useAuth();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="w-full rounded-md outline-none ring-ring hover:bg-accent focus-visible:ring-2 data-[state=open]:bg-accent">
@@ -83,7 +86,7 @@ export function NavUser({
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="gap-2 cursor-pointer">
+        <DropdownMenuItem className="gap-2 cursor-pointer" onClick={signout}>
           <LogOut className="h-4 w-4 text-muted-foreground" />
           Log out
         </DropdownMenuItem>
