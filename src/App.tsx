@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from './app/contexts/theme/ThemeProvider';
 import { Router } from './Router';
 import { Toaster } from './components/ui/Sonner';
+import { AuthProvider } from './app/contexts/Auth/AuthProvider';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,11 +16,13 @@ const queryClient = new QueryClient({
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <Router />
+      <AuthProvider>
+        <ThemeProvider>
+          <Router />
 
-        <Toaster />
-      </ThemeProvider>
+          <Toaster />
+        </ThemeProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
