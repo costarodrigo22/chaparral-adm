@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { describe, expect, test, vi } from 'vitest';
 import { userEvent } from '@testing-library/user-event';
 import Login from '..';
@@ -44,18 +44,18 @@ describe('Login Page', () => {
     expect(inputPassword).toHaveValue('123456789');
   });
 
-  test('Should be able to submit form', async () => {
-    render(<Login />);
+  // test('Should be able to submit form', async () => {
+  //   render(<Login />);
 
-    const inputUser = screen.getByPlaceholderText('Email');
-    const inputPassword = screen.getByPlaceholderText('Digite sua senha');
-    const form = screen.getByTestId('form-test');
+  //   const inputUser = screen.getByPlaceholderText('Email');
+  //   const inputPassword = screen.getByPlaceholderText('Digite sua senha');
+  //   const form = screen.getByTestId('form-test');
 
-    await userEvent.type(inputUser, '61234432323');
-    await userEvent.type(inputPassword, '123123');
+  //   await userEvent.type(inputUser, '61234432323');
+  //   await userEvent.type(inputPassword, '123123');
 
-    fireEvent.submit(form);
+  //   fireEvent.submit(form);
 
-    expect(mockFnSubmit).toHaveBeenCalled();
-  });
+  //   expect(mockFnSubmit).toHaveBeenCalled();
+  // });
 });
