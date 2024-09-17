@@ -1,18 +1,18 @@
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
-import { describe, expect, test, vi } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { userEvent } from '@testing-library/user-event';
 import Login from '..';
 
-const mockFnSubmit = vi.fn(); // Mock da função de submissão
+// const mockFnSubmit = vi.fn(); // Mock da função de submissão
 
-vi.mock('@/pages/login/useLogin', () => ({
-  useLogin: () => ({
-    handleSubmit: mockFnSubmit,
-    register: vi.fn(),
-    errors: { email: '', password: '' },
-  }),
-}));
+// vi.mock('@/pages/login/useLogin', () => ({
+//   useLogin: () => ({
+//     handleSubmit: mockFnSubmit,
+//     register: vi.fn(),
+//     errors: { email: '', password: '' },
+//   }),
+// }));
 
 describe('Login Page', () => {
   test('Should be able render login page', () => {
