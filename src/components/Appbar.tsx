@@ -7,8 +7,6 @@ import { SidebarTrigger, useSidebar } from './ui/sidebar';
 export default function Appbar() {
   const { open } = useSidebar();
 
-  console.log(open);
-
   return (
     <header className="flex items-center justify-between border-b bg-background h-[52px] sticky top-0 z-40 px-4">
       <SidebarTrigger
