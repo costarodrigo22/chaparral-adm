@@ -56,6 +56,6 @@ describe('Login Page', () => {
 
     fireEvent.submit(form);
 
-    // expect(mockFnSubmit).toHaveBeenCalled();
+    expect(mockFnSubmit).toHaveBeenCalled();
   });
 });
