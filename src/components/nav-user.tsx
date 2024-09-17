@@ -27,7 +27,7 @@ export function NavUser({
     avatar: string;
   };
 }) {
-  const { signout } = useAuth();
+  const { userLogged, signout } = useAuth();
 
   return (
     <DropdownMenu>
@@ -36,15 +36,15 @@ export function NavUser({
           <Avatar className="h-7 w-7 rounded-md border">
             <AvatarImage
               src={user.avatar}
-              alt={user.name}
+              alt={''}
               className="animate-in fade-in-50 zoom-in-90"
             />
             <AvatarFallback className="rounded-md">CN</AvatarFallback>
           </Avatar>
           <div className="grid flex-1 leading-none">
-            <div className="font-medium">{user.name}</div>
+            <div className="font-medium">{userLogged.data?.name}</div>
             <div className="overflow-hidden text-xs text-muted-foreground">
-              <div className="line-clamp-1">{user.email}</div>
+              <div className="line-clamp-1">{userLogged.data?.email}</div>
             </div>
           </div>
           <ChevronsUpDown className="ml-auto mr-0.5 h-4 w-4 text-muted-foreground/50" />

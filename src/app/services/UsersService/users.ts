@@ -1,6 +1,6 @@
 import { httpClient } from '../httpClient';
 
-interface IUsers {
+export interface IUsers {
   data: {
     created_at: string;
     email: string;
@@ -19,7 +19,21 @@ interface IUsers {
 export async function users() {
   // await new Promise(resolve => setTimeout(resolve, 5000));
 
-  const { data } = await httpClient.get<IUsers>('/api/v1/user/index');
+  const { data } = await httpClient.get('/api/v1/user/index');
 
-  return data.data;
+  const dataReturn = {
+    created_at: data.data[0].created_at,
+    email: data.data[0].email,
+    id: data.data[0].id,
+    name: data.data[0].name,
+    updated_at: data.data[0].updated_at,
+    profile: {
+      created_at: data.data[0].created_at,
+      id: data.data[0].id,
+      name: data.data[0].name,
+      updated_at: data.data[0].updated_at,
+    },
+  };
+
+  return dataReturn;
 }
