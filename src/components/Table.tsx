@@ -192,9 +192,9 @@ export default function TableApp({
                 await handlePageChange(currentPage - 1);
               }}
               disabled={currentPage === 1}
-              className="flex items-center p-1 px-2 disabled:opacity-30"
+              className="text-sm flex items-center justify-center p-1 px-2 disabled:opacity-30 hover:bg-zinc-100 transition-all rounded-md"
             >
-              <ChevronLeft /> Anterior
+              <ChevronLeft size={17} /> Anterior
             </button>
 
             <span className="px-4 text-xs text-black">
@@ -206,10 +206,10 @@ export default function TableApp({
                 await handlePageChange(currentPage + 1);
               }}
               disabled={currentPage === lastPage}
-              className="flex items-center p-1 px-2 disabled:opacity-30 hover:bg-zinc-100 transition-all rounded-md"
+              className="text-sm flex items-center justify-center p-1 px-2 disabled:opacity-30 hover:bg-zinc-100 transition-all rounded-md"
             >
               Próximo
-              <ChevronRight />
+              <ChevronRight size={17} />
             </button>
           </div>
         </div>
