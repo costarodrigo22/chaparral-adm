@@ -3,6 +3,7 @@
 import { cn } from '@/lib/utils';
 import { NavUser } from './nav-user';
 import { SidebarTrigger, useSidebar } from './ui/sidebar';
+// import ThemeSwitcher from './ThemeSwitcher';
 
 export default function Appbar() {
   const { open } = useSidebar();
@@ -13,14 +14,9 @@ export default function Appbar() {
         className={cn('-ml-8 rounded-full bg-white shadow-md', !open && 'ml-0')}
       />
 
-      <div>
-        <NavUser
-          user={{
-            name: 'Rodrigo',
-            email: 'rodrigo@example.com',
-            avatar: '/avatars/shadcn.jpg',
-          }}
-        />
+      <div className="flex items-center justify-center">
+        {/* <ThemeSwitcher /> */}
+        <NavUser />
       </div>
 
       {/* <ThemeSwitcher /> */}

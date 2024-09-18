@@ -18,15 +18,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useAuth } from '@/app/hooks/useAuth';
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
-}) {
+export function NavUser() {
   const { userLogged, signout } = useAuth();
 
   return (
@@ -35,7 +27,7 @@ export function NavUser({
         <div className="flex items-center gap-2 px-2 py-1.5 text-left text-sm transition-all">
           <Avatar className="h-7 w-7 rounded-md border">
             <AvatarImage
-              src={user.avatar}
+              src={''}
               alt={''}
               className="animate-in fade-in-50 zoom-in-90"
             />
