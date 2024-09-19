@@ -18,8 +18,7 @@ export function TeamSwitcher() {
   return (
     <DropdownMenu>
       <div className="flex items-center gap-1.5 overflow-hidden px-2 py-1.5 text-left text-sm transition-all">
-        <img src={logo} className="w-10" />
-        <div className="line-clamp-1 flex-1 pr-2 font-medium">Chaparral</div>
+        <img src={logo} className="w-20" />
         {/* <ChevronsUpDown className="ml-auto h-4 w-4 text-muted-foreground/50" /> */}
       </div>
       {/* <DropdownMenuContent

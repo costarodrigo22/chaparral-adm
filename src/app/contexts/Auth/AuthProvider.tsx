@@ -1,6 +1,6 @@
 import { localStorageKeys } from '@/app/config/localStorageKeys';
 import { UsersService } from '@/app/services/UsersService';
-import { IUsers } from '@/app/services/UsersService/users';
+import { IUsers } from '@/app/services/UsersService/userLogged';
 import SplashScreen from '@/components/SplashScreen';
 import { useQuery } from '@tanstack/react-query';
 import { createContext, useCallback, useEffect, useState } from 'react';
@@ -27,8 +27,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   });
 
   const { data, isError, isFetching, isSuccess } = useQuery({
-    queryKey: ['users'],
-    queryFn: () => UsersService.users(),
+    queryKey: ['userrLogged'],
+    queryFn: () => UsersService.userLogged(),
     enabled: signedIn,
   });
 

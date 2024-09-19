@@ -1,28 +1,50 @@
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
-import { describe, expect, test } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, test, vi } from 'vitest';
 import { userEvent } from '@testing-library/user-event';
 import Login from '..';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import * as useLoginModule from '../useLogin';
 
-// const mockFnSubmit = vi.fn(); // Mock da função de submissão
+const mockHandleSubmit = vi.fn();
 
-// vi.mock('@/pages/login/useLogin', () => ({
-//   useLogin: () => ({
-//     handleSubmit: mockFnSubmit,
-//     register: vi.fn(),
-//     errors: { email: '', password: '' },
-//   }),
-// }));
+vi.spyOn(useLoginModule, 'useLogin').mockReturnValue({
+  showPassword: false,
+  errors: {},
+  isPending: false,
+  register: vi.fn(),
+  handleShowPassword: vi.fn(),
+  handleSubmit: (e?: React.BaseSyntheticEvent) => {
+    e?.preventDefault();
+
+    const formData = {
+      email: 'costarodrigosilva247@gmail.com',
+      password: '123123',
+    };
+    return mockHandleSubmit(formData);
+  },
+});
+
+const createQueryClient = () => new QueryClient();
+const queryClient = createQueryClient();
 
 describe('Login Page', () => {
   test('Should be able render login page', () => {
-    const { getByText } = render(<Login />);
+    const { getByText } = render(
+      <QueryClientProvider client={queryClient}>
+        <Login />
+      </QueryClientProvider>,
+    );
 
     expect(getByText('LOGIN ÍAÇA')).toBeInTheDocument();
   });
 
   test('Should be able render form login', () => {
-    const { getByLabelText } = render(<Login />);
+    const { getByLabelText } = render(
+      <QueryClientProvider client={queryClient}>
+        <Login />
+      </QueryClientProvider>,
+    );
 
     const userField = getByLabelText('Usuário');
     const passwordField = getByLabelText('Senha');
@@ -32,7 +54,11 @@ describe('Login Page', () => {
   });
 
   test('Should be able update values in inputs when the users type', async () => {
-    const { getByPlaceholderText } = render(<Login />);
+    const { getByPlaceholderText } = render(
+      <QueryClientProvider client={queryClient}>
+        <Login />
+      </QueryClientProvider>,
+    );
 
     const inputUser = getByPlaceholderText('Email');
     const inputPassword = getByPlaceholderText('Digite sua senha');
@@ -44,18 +70,26 @@ describe('Login Page', () => {
     expect(inputPassword).toHaveValue('123456789');
   });
 
-  // test('Should be able to submit form', async () => {
-  //   render(<Login />);
+  test('Should be able to submit form', async () => {
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Login />
+      </QueryClientProvider>,
+    );
 
-  //   const inputUser = screen.getByPlaceholderText('Email');
-  //   const inputPassword = screen.getByPlaceholderText('Digite sua senha');
-  //   const form = screen.getByTestId('form-test');
+    const inputUser = screen.getByPlaceholderText('Email');
+    const inputPassword = screen.getByPlaceholderText('Digite sua senha');
 
-  //   await userEvent.type(inputUser, '61234432323');
-  //   await userEvent.type(inputPassword, '123123');
+    await userEvent.type(inputUser, 'costarodrigosilva247@gmail.com');
+    await userEvent.type(inputPassword, '123123');
 
-  //   fireEvent.submit(form);
+    fireEvent.submit(screen.getByTestId('form-test'));
 
-  //   expect(mockFnSubmit).toHaveBeenCalled();
-  // });
+    expect(mockHandleSubmit).toHaveBeenCalled();
+
+    expect(mockHandleSubmit).toHaveBeenCalledWith({
+      email: 'costarodrigosilva247@gmail.com',
+      password: '123123',
+    });
+  });
 });

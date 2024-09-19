@@ -87,7 +87,7 @@ const data = {
         },
         {
           title: 'Usuários',
-          url: 'config/users',
+          url: '/config/users',
           icon: Star,
           description: 'Browse your starred prompts',
         },

@@ -1,10 +1,12 @@
 import TableApp from '@/components/Table';
 import { Button } from '@/components/ui/Button';
 import Wrapper from '@/components/Wrapper';
-import { EyeIcon, PlusIcon, Search, TrashIcon } from 'lucide-react';
+import { EyeIcon, PlusIcon, Search, Trash2 } from 'lucide-react';
 import { useUsers } from './useUsers';
 import ModalAddUsers from './components/ModalAddUsers';
 import ModalEditUsers from './components/ModalEditUsers';
+import ModalConfirm from '@/components/ModalConfirm';
+import useFilter from '@/app/hooks/useFilter';
 
 export default function Users() {
   const {
@@ -12,11 +14,24 @@ export default function Users() {
     data,
     openModalAddUsers,
     openModalEditUsers,
+    isFetching,
+    dataUserEdit,
+    isPending,
+    modalDeleteUsers,
+    isPendingDeleteUser,
     handleCloseModalEditUsers,
     handleOpenModalEditUsers,
     handleCloseModalAddUsers,
     handleOpenModalAddUsers,
+    handleCloseModalDeleteUser,
+    handleOpenModalDeleteUser,
+    handleDeleteUser,
   } = useUsers();
+
+  const { filteredList, handleChangeSearchTerm } = useFilter(
+    data ?? [],
+    'name',
+  );
 
   return (
     <Wrapper>
@@ -27,7 +42,18 @@ export default function Users() {
 
       <ModalEditUsers
         open={openModalEditUsers}
+        dataEdit={dataUserEdit}
+        isLoading={isPending}
         onClose={handleCloseModalEditUsers}
+      />
+
+      <ModalConfirm
+        open={modalDeleteUsers}
+        isLoading={isPendingDeleteUser}
+        title="Deseja excluir?"
+        description="O usuário será excluído permanentemente"
+        onClose={handleCloseModalDeleteUser}
+        onExecute={handleDeleteUser}
       />
 
       <div className="w-full p-6 flex items-center justify-between">
@@ -38,6 +64,7 @@ export default function Users() {
             <Search color="#898989" size={16} />
 
             <input
+              onChange={handleChangeSearchTerm}
               placeholder="Pesquisar"
               className="text px-3 py-1 text-sm ring-offset-background outline-none text-muted-foreground"
             />
@@ -47,6 +74,7 @@ export default function Users() {
             onClick={handleOpenModalAddUsers}
             className="text-xs"
             size="sm"
+            data-testid="btn-new-user"
           >
             <PlusIcon className="mr-2" size={16} />
             Novo usuário
@@ -55,21 +83,27 @@ export default function Users() {
       </div>
 
       <TableApp
-        loading={false}
-        dataTable={data}
+        loading={isFetching}
+        dataTable={filteredList ? filteredList : []}
         lastPage={3}
         headersTable={headersTable}
         paginationURL=""
         actions={[
           {
-            icon: <EyeIcon size={18} className="mr-2 cursor-pointer" />,
-            onAction: info => handleOpenModalEditUsers(),
+            icon: (
+              <EyeIcon
+                size={18}
+                className="mr-2 cursor-pointer"
+                stroke="#1E1E1E"
+              />
+            ),
+            onAction: info => handleOpenModalEditUsers(info.id),
           },
           {
             icon: (
-              <TrashIcon size={18} className="cursor-pointer" stroke="#F00" />
+              <Trash2 size={18} className="cursor-pointer" stroke="#FF3737" />
             ),
-            onAction: info => console.log(info.id),
+            onAction: info => handleOpenModalDeleteUser(info.id),
           },
         ]}
       />

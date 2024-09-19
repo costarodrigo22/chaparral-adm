@@ -87,7 +87,11 @@ export default function Login() {
             </span>
           </div> */}
 
-          <Button disabled={isPending} type="submit">
+          <Button
+            data-testid="btn-submit-test"
+            disabled={isPending}
+            type="submit"
+          >
             Acessar
           </Button>
         </form>

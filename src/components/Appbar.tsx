@@ -9,7 +9,7 @@ export default function Appbar() {
   const { open } = useSidebar();
 
   return (
-    <header className="flex items-center justify-between border-b bg-background h-[52px] sticky top-0 z-40 px-4">
+    <header className="flex items-center justify-between border-b bg-background h-[75px] sticky top-0 z-40 px-4">
       <SidebarTrigger
         className={cn('-ml-8 rounded-full bg-white shadow-md', !open && 'ml-0')}
       />
