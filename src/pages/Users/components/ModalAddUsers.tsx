@@ -5,9 +5,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/Dialog';
-import { Input } from '@/components/ui/Input';
-import { Label } from '@/components/ui/Label';
-import { Separator } from '@/components/ui/separator';
 import {
   Select,
   SelectContent,
@@ -20,10 +17,13 @@ import { Button } from '@/components/ui/Button';
 import { Controller } from 'react-hook-form';
 import { UsersService } from '@/app/services/UsersService';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
+import { Separator } from '@/components/ui/separator';
+import { Label } from '@/components/ui/Label';
+import { Input } from '@/components/ui/Input';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const schema = z.object({
   name: z.string().min(1, 'Nome é obrigatório'),
@@ -197,7 +197,9 @@ export default function ModalAddUsers({ open, onClose }: IModalAddUsers) {
               Cancelar
             </Button>
 
-            <Button disabled={isPending}>Cadastrar</Button>
+            <Button type="submit" disabled={isPending}>
+              Cadastrar
+            </Button>
           </div>
         </form>
       </DialogContent>
