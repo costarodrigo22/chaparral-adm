@@ -1,5 +1,4 @@
 import {
-  Bird,
   History,
   Layers,
   LifeBuoy,
@@ -7,7 +6,6 @@ import {
   Send,
   Settings,
   Star,
-  Turtle,
 } from 'lucide-react';
 
 import { NavMain } from '@/components/nav-main';
@@ -49,27 +47,15 @@ const data = {
   // },
   navMain: [
     {
-      title: 'Models',
+      title: 'Seções',
       url: '#',
       icon: Layers,
       items: [
         {
-          title: 'Genesis',
-          url: '#',
+          title: 'Cabeçalho',
+          url: '/sections/header',
           icon: Rabbit,
-          description: 'Our fastest model for general use cases.',
-        },
-        {
-          title: 'Explorer',
-          url: '#',
-          icon: Bird,
-          description: 'Performance and speed for efficiency.',
-        },
-        {
-          title: 'Quantum',
-          url: '#',
-          icon: Turtle,
-          description: 'The most powerful model for complex computations.',
+          description: 'Cabeçalho da página',
         },
       ],
     },

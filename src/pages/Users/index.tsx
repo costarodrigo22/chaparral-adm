@@ -66,7 +66,7 @@ export default function Users() {
             <input
               onChange={handleChangeSearchTerm}
               placeholder="Pesquisar"
-              className="text px-3 py-1 text-sm ring-offset-background outline-none text-muted-foreground"
+              className="text px-3 py-1 dark:bg-black text-sm ring-offset-background outline-none text-muted-foreground"
             />
           </div>
 
@@ -90,13 +90,7 @@ export default function Users() {
         paginationURL=""
         actions={[
           {
-            icon: (
-              <EyeIcon
-                size={18}
-                className="mr-2 cursor-pointer"
-                stroke="#1E1E1E"
-              />
-            ),
+            icon: <EyeIcon size={18} className="mr-2 cursor-pointer" />,
             onAction: info => handleOpenModalEditUsers(info.id),
           },
           {
