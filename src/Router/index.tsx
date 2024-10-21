@@ -7,6 +7,7 @@ import Users from '@/pages/Users';
 import Dashboard from '@/pages/Dashboard';
 import Home from '@/pages/Home';
 import Profile from '@/pages/Profile/inde';
+import Header from '@/pages/Header';
 
 export function Router() {
   return (
@@ -20,6 +21,7 @@ export function Router() {
         <Route element={<AuthGuard isPrivate />}>
           <Route element={<AppLayout />}>
             <Route path="/" element={<Home />} />
+            <Route path="sections/header" element={<Header />} />
             <Route path="config/dashboard" element={<Dashboard />} />
             <Route path="config/users" element={<Users />} />
             <Route path="config/profile" element={<Profile />} />

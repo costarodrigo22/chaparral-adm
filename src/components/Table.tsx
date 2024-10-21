@@ -171,7 +171,7 @@ export default function TableApp({
       </Table>
 
       {!table.getRowModel().rows.length ? (
-        <div className="text-gray-600 w-full flex items-center justify-center py-4">
+        <div className="text-gray-600 dark:text-white w-full flex items-center justify-center py-4">
           Sem dados!
         </div>
       ) : (
@@ -192,12 +192,12 @@ export default function TableApp({
                 await handlePageChange(currentPage - 1);
               }}
               disabled={currentPage === 1}
-              className="text-sm flex items-center justify-center p-1 px-2 disabled:opacity-30 hover:bg-zinc-100 transition-all rounded-md"
+              className="text-sm flex items-center justify-center p-1 px-2 disabled:opacity-30 hover:bg-zinc-100 dark:hover:bg-opacity-90 dark:hover:bg-zinc-700 transition-all rounded-md"
             >
               <ChevronLeft size={17} /> Anterior
             </button>
 
-            <span className="px-4 text-xs text-black">
+            <span className="px-4 text-xs text-black dark:text-white">
               {currentPage} de {lastPage}
             </span>
 
@@ -206,7 +206,7 @@ export default function TableApp({
                 await handlePageChange(currentPage + 1);
               }}
               disabled={currentPage === lastPage}
-              className="text-sm flex items-center justify-center p-1 px-2 disabled:opacity-30 hover:bg-zinc-100 transition-all rounded-md"
+              className="text-sm flex items-center justify-center p-1 px-2 disabled:opacity-30 hover:bg-zinc-100 dark:hover:bg-zinc-700 dark:hover:bg-opacity-90 transition-all rounded-md"
             >
               Próximo
               <ChevronRight size={17} />

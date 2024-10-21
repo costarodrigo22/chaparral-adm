@@ -17,7 +17,7 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <ThemeProvider>
+        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
           <Router />
 
           <Toaster />
