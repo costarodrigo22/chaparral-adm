@@ -6,6 +6,7 @@ import Register from '@/pages/Register';
 import Users from '@/pages/Users';
 import Dashboard from '@/pages/Dashboard';
 import Home from '@/pages/Home';
+import Profile from '@/pages/Profile/inde';
 
 export function Router() {
   return (
@@ -21,6 +22,7 @@ export function Router() {
             <Route path="/" element={<Home />} />
             <Route path="config/dashboard" element={<Dashboard />} />
             <Route path="config/users" element={<Users />} />
+            <Route path="config/profile" element={<Profile />} />
           </Route>
         </Route>
       </Routes>

@@ -1,10 +1,4 @@
-import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-} from 'lucide-react';
+import { ChevronsUpDown, LogOut, User } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -17,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useAuth } from '@/app/hooks/useAuth';
+import { Link } from 'react-router-dom';
 
 export function NavUser() {
   const { userLogged, signout } = useAuth();
@@ -27,7 +22,7 @@ export function NavUser() {
         <div className="flex items-center gap-2 px-2 py-1.5 text-left text-sm transition-all">
           <Avatar className="h-7 w-7 rounded-md border">
             <AvatarImage
-              src={''}
+              src={userLogged.data?.image}
               alt={''}
               className="animate-in fade-in-50 zoom-in-90"
             />
@@ -64,18 +59,12 @@ export function NavUser() {
         </DropdownMenuLabel> */}
         {/* <DropdownMenuSeparator /> */}
         <DropdownMenuGroup>
-          <DropdownMenuItem className="gap-2 cursor-pointer">
-            <BadgeCheck className="h-4 w-4 text-muted-foreground" />
-            Account
-          </DropdownMenuItem>
-          <DropdownMenuItem className="gap-2 cursor-pointer">
-            <CreditCard className="h-4 w-4 text-muted-foreground" />
-            Billing
-          </DropdownMenuItem>
-          <DropdownMenuItem className="gap-2 cursor-pointer">
-            <Bell className="h-4 w-4 text-muted-foreground" />
-            Notifications
-          </DropdownMenuItem>
+          <Link to="config/profile">
+            <DropdownMenuItem className="gap-2 cursor-pointer">
+              <User className="h-4 w-4 text-muted-foreground" />
+              Conta
+            </DropdownMenuItem>
+          </Link>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="gap-2 cursor-pointer" onClick={signout}>

@@ -96,6 +96,22 @@ export default function ModalEditUsers({
     }
   });
 
+  async function handleResetPasswordUser() {
+    try {
+      await mutateAsync({
+        name: dataEdit?.name,
+        email: dataEdit?.email,
+        profile_id: dataEdit?.profile?.id,
+        password: dataEdit?.email,
+        id: dataEdit?.id ?? '',
+      });
+    } catch {
+      toast.error('Erro ao resetar senha do usuário!');
+    } finally {
+      setModalEdit(false);
+    }
+  }
+
   useEffect(() => {
     if (dataEdit) {
       reset({
@@ -112,7 +128,9 @@ export default function ModalEditUsers({
         open={modalEdit}
         title="Deseja continuar?"
         description="Após o reset da senha, ela será redefinida para o e-mail do usuário."
+        isLoading={isPending}
         onClose={() => setModalEdit(false)}
+        onExecute={handleResetPasswordUser}
       />
 
       <Dialog open={open} onOpenChange={onClose}>

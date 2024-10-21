@@ -6,6 +6,7 @@ export interface IUsers {
     email: string;
     id: string;
     name: string;
+    image: string;
     profile: {
       created_at: string;
       id: string;
@@ -27,11 +28,12 @@ export async function userLogged() {
     id: data.data.id,
     name: data.data.name,
     updated_at: data.data.updated_at,
+    image: data.data.image,
     profile: {
-      created_at: data.data.created_at,
-      id: data.data.id,
-      name: data.data.name,
-      updated_at: data.data.updated_at,
+      created_at: data.data.profile.created_at,
+      id: data.data.profile.id,
+      name: data.data.profile.name,
+      updated_at: data.data.profile.updated_at,
     },
   };
 
