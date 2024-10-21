@@ -11,14 +11,16 @@ import {
   // DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import logo from '@/assets/logo-adm.svg';
+import logoWhite from '@/assets/logo-adm-white.svg';
 
 export function TeamSwitcher() {
   // const [activeTeam, setActiveTeam] = React.useState(teams[0]);
 
   return (
     <DropdownMenu>
-      <div className="flex items-center gap-1.5 overflow-hidden px-2 py-1.5 text-left text-sm transition-all">
-        <img src={logo} className="w-20" />
+      <div className="flex items-center rounded gap-1.5 overflow-hidden px-2 py-1.5 text-left text-sm transition-all">
+        <img src={logo} className="w-20 dark:hidden" />
+        <img src={logoWhite} className="w-20 hidden dark:block" />
         {/* <ChevronsUpDown className="ml-auto h-4 w-4 text-muted-foreground/50" /> */}
       </div>
       {/* <DropdownMenuContent
