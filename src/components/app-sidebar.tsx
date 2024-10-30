@@ -57,6 +57,42 @@ const data = {
           icon: Rabbit,
           description: 'Cabeçalho da página',
         },
+        // {
+        //   title: 'Detalhes',
+        //   url: '/sections/details',
+        //   icon: Rabbit,
+        //   description: 'Detalhes da página',
+        // },
+        {
+          title: 'Produtos',
+          url: '/sections/products',
+          icon: Rabbit,
+          description: 'Seção de produtos da página',
+        },
+        {
+          title: 'Institucional',
+          url: '/sections/institutional',
+          icon: Rabbit,
+          description: 'Parte institucional da página',
+        },
+        {
+          title: 'Receitas',
+          url: '/sections/recipes',
+          icon: Rabbit,
+          description: 'Seção de receitas da página',
+        },
+        {
+          title: 'Seja parceiro',
+          url: '/sections/be-a-partner',
+          icon: Rabbit,
+          description: 'Seção de parceiros da página',
+        },
+        {
+          title: 'PDVs',
+          url: '/sections/PDVs',
+          icon: Rabbit,
+          description: 'Seção de PDVs da página',
+        },
       ],
     },
     {
