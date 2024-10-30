@@ -1,6 +1,6 @@
-import { httpClient } from "../httpClient";
+import { httpClient } from '../httpClient';
 
-interface IAddPDVs{
+interface IAddPDVs {
   title: string;
   street: string;
   neighborhood: string;
@@ -10,7 +10,15 @@ interface IAddPDVs{
   cep: string;
 }
 
-export async function addPDVs({ city, neighborhood, number, street, title, uf, cep }:IAddPDVs) {
+export async function addPDVs({
+  city,
+  neighborhood,
+  number,
+  street,
+  title,
+  uf,
+  cep,
+}: IAddPDVs) {
   const body = {
     city,
     neighborhood,
@@ -20,5 +28,5 @@ export async function addPDVs({ city, neighborhood, number, street, title, uf, c
     uf,
     cep,
   };
-  await httpClient.post('', body)
+  await httpClient.post('', body);
 }

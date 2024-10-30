@@ -1,6 +1,6 @@
-import { httpClient } from "../httpClient";
+import { httpClient } from '../httpClient';
 
-interface IPDVs{
+interface IPDVs {
   data: {
     title: string;
     street: string;
@@ -8,12 +8,11 @@ interface IPDVs{
     number: string;
     city: string;
     uf: string;
-    cep: string
-  }
+    cep: string;
+  };
 }
 
 export async function PDVS() {
-
   const { data } = await httpClient.get<IPDVs>('/api/');
 
   return data.data;

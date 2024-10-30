@@ -3,7 +3,7 @@ import { httpClient } from '@/app/services/httpClient';
 
 export default function useFileUploader(
   endpoint: string | undefined,
-  onFileSelect: (file: File | null, previewUrl: string | null) => void
+  onFileSelect: (file: File | null, previewUrl: string | null) => void,
 ) {
   const [image, setImage] = useState<string | null>(null);
   const [displayImage, setDisplayImage] = useState<string | null>(null);
@@ -48,5 +48,12 @@ export default function useFileUploader(
     onFileSelect(null, null);
   }
 
-  return { image, handleFileChange, handleDeleteImage, uniqueId, setDisplayImage, displayImage };
+  return {
+    image,
+    handleFileChange,
+    handleDeleteImage,
+    uniqueId,
+    setDisplayImage,
+    displayImage,
+  };
 }

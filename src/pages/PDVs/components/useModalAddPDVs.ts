@@ -5,7 +5,6 @@ import { PDVsService } from '@/app/services/PDVsService';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 export default function useModalAddPDVs(onClose: () => void) {
-
   const schema = z.object({
     title: z.string().min(1, 'Nome é obrigatório'),
     street: z.string().min(1, 'Rua é obrigatório'),
@@ -56,5 +55,5 @@ export default function useModalAddPDVs(onClose: () => void) {
     }
   });
 
-  return { register, errors, handleSubmit, isPending }
+  return { register, errors, handleSubmit, isPending };
 }

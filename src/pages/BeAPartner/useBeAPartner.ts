@@ -1,6 +1,6 @@
-import { httpClient } from "@/app/services/httpClient";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
+import { httpClient } from '@/app/services/httpClient';
+import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 interface infoBody {
   data: [
@@ -24,10 +24,10 @@ export default function useBeAPartner() {
   }>({});
 
   function handleToggleIsTitleEditable() {
-    setIsTitleEditable(!isTitleEditable)
+    setIsTitleEditable(!isTitleEditable);
   }
   function handleToggleIsDescEditable() {
-    setIsDescEditable(!isDescEditable)
+    setIsDescEditable(!isDescEditable);
   }
 
   const handleFileSelect = (
@@ -48,7 +48,7 @@ export default function useBeAPartner() {
     };
 
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await httpClient.post(
         '/api/v1/home_be_a_partner_section/update_info',
         bodyInfo,
@@ -71,17 +71,17 @@ export default function useBeAPartner() {
     } catch (error) {
       console.log(error);
       toast.error('Erro ao enviar os dados');
-    }finally {
-      setIsLoading(false)
-      setisImageChanged(false)
-      setIsDescEditable(false)
-      setIsTitleEditable(false)
+    } finally {
+      setIsLoading(false);
+      setisImageChanged(false);
+      setIsDescEditable(false);
+      setIsTitleEditable(false);
     }
   }
 
   async function getBeAPartnersInfo() {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const infoRes = await httpClient.get<infoBody>(
         '/api/without/home_be_a_partner_section/index',
       );
@@ -95,8 +95,8 @@ export default function useBeAPartner() {
     } catch (error) {
       toast.error('Erro ao buscar dados!');
       console.log(error);
-    } finally{
-      setIsLoading(false)
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -104,5 +104,26 @@ export default function useBeAPartner() {
     getBeAPartnersInfo();
   }, []);
 
-  return { handleSendData, setisImageChanged, isImageChanged, handleToggleIsDescEditable, handleToggleIsTitleEditable, isLoading, handleFileSelect, setIsDescEditable, setIsTitleEditable, isDescEditable, isTitleEditable, title, setTitle, descricao, setDescricao, getBeAPartnersInfo, image, setImage, fileBeAPartner, setFileBeAPartner }
+  return {
+    handleSendData,
+    setisImageChanged,
+    isImageChanged,
+    handleToggleIsDescEditable,
+    handleToggleIsTitleEditable,
+    isLoading,
+    handleFileSelect,
+    setIsDescEditable,
+    setIsTitleEditable,
+    isDescEditable,
+    isTitleEditable,
+    title,
+    setTitle,
+    descricao,
+    setDescricao,
+    getBeAPartnersInfo,
+    image,
+    setImage,
+    fileBeAPartner,
+    setFileBeAPartner,
+  };
 }
