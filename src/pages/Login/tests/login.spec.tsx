@@ -85,8 +85,6 @@ describe('Login Page', () => {
 
     fireEvent.submit(screen.getByTestId('form-test'));
 
-    expect(mockHandleSubmit).toHaveBeenCalled();
-
     expect(mockHandleSubmit).toHaveBeenCalledWith({
       email: 'costarodrigosilva247@gmail.com',
       password: '123123',
