@@ -4,9 +4,10 @@ import { Edit } from 'lucide-react';
 
 interface InputTypeWYSIWYGProps {
   title: string;
-  onIsEditable: () => void;
-  isEditable: boolean;
-  actualValue: string;
+  onIsEditable?: () => void;
+  isEditable?: boolean;
+  showEditButton?: boolean;
+  actualValue?: string;
   onContentChange: (content: string) => void;
 }
 
@@ -15,7 +16,8 @@ export default function InputTypeWYSIWYG({
   actualValue,
   onContentChange,
   onIsEditable,
-  isEditable,
+  isEditable = true,
+  showEditButton,
 }: InputTypeWYSIWYGProps) {
   const { quillRef } = useInputTypeWYSIWYG({
     onContentChange,
@@ -31,16 +33,20 @@ export default function InputTypeWYSIWYG({
         <div ref={quillRef} />
       </div>
       <div className="w-full flex items-center justify-end">
-        {!isEditable ? (
-          <button
-            onClick={onIsEditable}
-            className="mt-2 bg-[#f1f5f9] items-center justify-center hover:bg-opacity-70 transition-all duration-200 dark:hover:bg-opacity-80 hover:border-opacity-70 border border-[#e2e8f0] flex gap-[10px] text-white py-1 px-4 rounded-lg"
-          >
-            <Edit className="text-[#1e1e1e]" size={18} />
-            <span className="text-[#1e1e1e]">Editar</span>
-          </button>
-        ) : (
-          <div></div>
+        {showEditButton && (
+          <div>
+            {!isEditable ? (
+              <button
+                onClick={onIsEditable}
+                className="mt-2 bg-[#f1f5f9] items-center justify-center hover:bg-opacity-70 transition-all duration-200 dark:hover:bg-opacity-80 hover:border-opacity-70 border border-[#e2e8f0] flex gap-[10px] text-white py-1 px-4 rounded-lg"
+              >
+                <Edit className="text-[#1e1e1e]" size={18} />
+                <span className="text-[#1e1e1e]">Editar</span>
+              </button>
+            ) : (
+              <div></div>
+            )}
+          </div>
         )}
       </div>
     </div>
