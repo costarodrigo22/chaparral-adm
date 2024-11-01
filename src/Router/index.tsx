@@ -12,6 +12,7 @@ import Institutional from '@/pages/Institutional';
 import BeAPartner from '@/pages/BeAPartner';
 // import Details from '@/pages/Details';
 import PDVs from '@/pages/PDVs';
+import Recipes from '@/pages/Recipes';
 
 export function Router() {
   return (
@@ -31,7 +32,7 @@ export function Router() {
             {/* <Route path="sections/details" element={<Details />} /> */}
             <Route path="sections/products" element={<Header />} />
             <Route path="sections/institutional" element={<Institutional />} />
-            <Route path="sections/recipes" element={<Header />} />
+            <Route path="sections/recipes" element={<Recipes />} />
             <Route path="sections/be-a-partner" element={<BeAPartner />} />
             <Route path="sections/PDVs" element={<PDVs />} />
 

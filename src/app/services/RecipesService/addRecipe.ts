@@ -1,6 +1,6 @@
 import { httpClient } from '../httpClient';
 
-interface IEditPDVs {
+interface IAddPDVs {
   title: string;
   street: string;
   neighborhood: string;
@@ -10,7 +10,7 @@ interface IEditPDVs {
   cep: string;
 }
 
-export async function editPDVs({
+export async function addPDVs({
   city,
   neighborhood,
   number,
@@ -18,7 +18,7 @@ export async function editPDVs({
   title,
   uf,
   cep,
-}: IEditPDVs) {
+}: IAddPDVs) {
   const body = {
     city,
     neighborhood,
@@ -28,5 +28,5 @@ export async function editPDVs({
     uf,
     cep,
   };
-  await httpClient.put('', body);
+  await httpClient.post('', body);
 }

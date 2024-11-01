@@ -1,6 +1,8 @@
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import imageLogin from '@/assets/image-login.svg';
+import logo from '@/assets/logo-login.svg';
+import logoDark from '@/assets/logo-login-dark.svg';
 import { Button } from '@/components/ui/Button';
 import { Eye, EyeOff } from 'lucide-react';
 import { useLogin } from './useLogin';
@@ -22,7 +24,16 @@ export default function Login() {
         style={{ height: '100%' }}
         className="absolute left-0"
       />
-      <div className="w-full max-w-[450px] border border-slate-300 rounded-md p-7 flex items-center justify-center flex-col gap-5 z-10 bg-white">
+      <div className="w-full dark:bg-black dark:border-slate-900 max-w-[450px] border border-slate-300 rounded-md p-7 flex items-center justify-center flex-col gap-5 z-10 bg-white">
+        <div className="w-full flex items-center justify-center">
+          <img height={60} width={100} src={logo} className="dark:hidden" />
+          <img
+            height={60}
+            width={100}
+            src={logoDark}
+            className="hidden dark:block"
+          />
+        </div>
         <div className="w-full flex flex-col justify-start">
           <span className="font-bold text-xl">LOGIN ÍAÇA</span>
 
