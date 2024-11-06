@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/Dialog';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react';
+import { ArrowLeftIcon, ArrowRightIcon, InfoIcon } from 'lucide-react';
 import ColorPicker from '@/components/ColorPicker';
 import { Controller } from 'react-hook-form';
 import useModalAddRecipe from './useModalAddRecipe';
@@ -76,28 +76,75 @@ export default function ModalAddRecipes({ onClose, open }: IModalAddRecipe) {
                     handleFileSelect('cardImage', file, previewUrl);
                   }}
                 />
-                <div className="max-w-[520px]">
-                  <Controller
-                    control={control}
-                    name="card_recipe_description"
-                    render={({ field: { onChange, value } }) => (
-                      <InputTypeWYSIWYG
-                        isEditable
-                        showEditButton={false}
-                        onContentChange={onChange}
-                        actualValue={value}
-                        title="Descrição"
-                      />
+                <div className="w-full flex flex-col">
+                  <div className="w-full">
+                    <Controller
+                      control={control}
+                      name="card_recipe_description"
+                      render={({ field: { onChange, value } }) => (
+                        <InputTypeWYSIWYG
+                          isEditable
+                          showEditButton={false}
+                          onContentChange={onChange}
+                          actualValue={value}
+                          title="Descrição"
+                        />
+                      )}
+                    />
+                    {errors.card_recipe_description && (
+                      <p className="text-red-500">
+                        {errors.card_recipe_description.message}
+                      </p>
                     )}
-                  />
-                  {errors.card_recipe_description && (
-                    <p className="text-red-500">
-                      {errors.card_recipe_description.message}
-                    </p>
-                  )}
+                  </div>
+                  <div className="flex items-center gap-3 mt-3">
+                    <InfoIcon size={20} color="#5959ff" />
+                    <span>
+                      O gradient sera de cima (cor inicial) para baixo (cor
+                      final)
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-4 mt-3">
+                    <div className="w-[140px]">
+                      <Controller
+                        control={control}
+                        name="card_recipe_start_color"
+                        render={({ field: { onChange, value } }) => (
+                          <ColorPicker
+                            title="Cor inicial"
+                            actualVal={value}
+                            onColorChange={onChange}
+                          />
+                        )}
+                      />
+                      {errors.card_recipe_start_color && (
+                        <p className="text-red-500 text-xs">
+                          {errors.card_recipe_start_color.message}
+                        </p>
+                      )}
+                    </div>
+                    <div className="w-[140px]">
+                      <Controller
+                        control={control}
+                        name="card_recipe_final_color"
+                        render={({ field: { onChange, value } }) => (
+                          <ColorPicker
+                            title="Cor final"
+                            actualVal={value}
+                            onColorChange={onChange}
+                          />
+                        )}
+                      />
+                      {errors.card_recipe_final_color && (
+                        <p className="text-red-500 text-xs">
+                          {errors.card_recipe_final_color.message}
+                        </p>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="flex gap-5 items-center justify-end w-full">
+              <div className="flex gap-5 items-center justify-end w-full mt-4">
                 <Button
                   type="button"
                   onClick={() => onCancel()}
@@ -122,7 +169,7 @@ export default function ModalAddRecipes({ onClose, open }: IModalAddRecipe) {
               </div>
             </TabsContent>
             <TabsContent value="recipeData">
-              <div className="my-9">
+              <div className="my-9 flex flex-col gap-10">
                 <FileUploader
                   height={200}
                   width={520}
@@ -134,7 +181,7 @@ export default function ModalAddRecipes({ onClose, open }: IModalAddRecipe) {
                     handleFileSelect('bannerImage', file, previewUrl);
                   }}
                 />
-                <div className="flex items-center gap-5 h-[200px] mt-7">
+                <div className="flex items-center gap-5 h-auto">
                   <div className="w-full h-full flex flex-col">
                     <Controller
                       control={control}
@@ -194,7 +241,7 @@ export default function ModalAddRecipes({ onClose, open }: IModalAddRecipe) {
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-5 h-[200px]">
+                <div className="flex items-center gap-5 h-auto">
                   <div className="w-full h-full flex flex-col">
                     <Controller
                       control={control}

@@ -28,7 +28,7 @@ export default function ColorPicker({
 
   return (
     <DropdownMenu>
-      <div className="flex flex-col gap-2 cursor-pointer w-[120px]">
+      <div className="flex flex-col gap-2 cursor-pointer ">
         <span className="text-black dark:text-white font-medium text-sm">
           {title}
         </span>

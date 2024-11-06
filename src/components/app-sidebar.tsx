@@ -57,6 +57,12 @@ const data = {
           icon: Rabbit,
           description: 'Cabeçalho da página',
         },
+        {
+          title: 'Sobre',
+          url: '/sections/about',
+          icon: Rabbit,
+          description: 'Seção Sobre da página',
+        },
         // {
         //   title: 'Detalhes',
         //   url: '/sections/details',

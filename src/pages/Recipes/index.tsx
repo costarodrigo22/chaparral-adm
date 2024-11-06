@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { ChefHatIcon, PlusIcon, SearchIcon, StoreIcon } from 'lucide-react';
+import { ChefHatIcon, PlusIcon, SearchIcon } from 'lucide-react';
 import { useState } from 'react';
 import SectionsEditAccordion from '@/components/ui/SectionsEditAccordion';
 import { ClipLoader } from 'react-spinners';
@@ -27,8 +27,8 @@ export default function Recipes() {
             Registre suas receitas
           </span>
         </div>
-        <div className="flex gap-5">
-          <div className="w-full relative">
+        <div className="flex gap-5 items-center">
+          <div className="w-full relative ">
             <SearchIcon
               color="#898989"
               size={24}
