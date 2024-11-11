@@ -11,16 +11,17 @@ export default function useModalEditPDVs(onClose: () => void, id: string) {
   const [carousselFile, setCarousselFile] = useState<{
     [key: string]: { file: File | null; previewUrl: string | null };
   }>({});
+  const [actualImage, setActualImage] = useState<string>('')
 
   const schema = z.object({
     name: z.string().min(1, 'Nome é obrigatório'),
     street: z.string().min(1, 'Rua é obrigatório'),
     neighborhood: z.string().min(1, 'Bairro é obrigatório'),
-    telephone_number: z.string().min(1, 'Bairro é obrigatório'),
+    telephone_number: z.string().min(1, 'Bairro é obrigatório').max(11, 'Apenas DDD e Número'),
     number: z.string().min(1, 'Número é obrigatório'),
     city: z.string().min(1, 'Cidade é obrigatório'),
-    uf: z.string().min(1, 'UF é obrigatório'),
-    cep: z.string().min(1, 'CEP é obrigatório'),
+    uf: z.string().min(1, 'UF é obrigatório').max(2,'Apenas a Sigla do estado, ex: MA'),
+    cep: z.string().min(1, 'CEP é obrigatório').max(9, 'CEP inválido'),
   });
 
   type FormData = z.infer<typeof schema>;
@@ -82,7 +83,6 @@ export default function useModalEditPDVs(onClose: () => void, id: string) {
           });
         }
       }
-
       reset();
       setCarousselFile({});
       onClose();
@@ -105,6 +105,10 @@ export default function useModalEditPDVs(onClose: () => void, id: string) {
       const res = await httpClient.get(
         `/api/without/partners/find_by_id/${id}`,
       );
+
+      const resImage = await httpClient.get<string>(`/api/v1/partners/display_image/${id}`)
+
+      setActualImage(resImage.data)
 
       reset({
         name: res.data.data.name || '',
@@ -139,10 +143,12 @@ export default function useModalEditPDVs(onClose: () => void, id: string) {
   return {
     register,
     cancelReq,
+    reset,
     errors,
     handleSubmit,
     isPending,
     handleFileSelect,
+    actualImage,
     carousselFile,
   };
 }

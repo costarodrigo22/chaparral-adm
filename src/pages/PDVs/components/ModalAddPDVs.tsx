@@ -11,6 +11,7 @@ import { Separator } from '@/components/ui/separator';
 import { Info, MapPinIcon } from 'lucide-react';
 import useModalAddPDVs from './useModalAddPDVs';
 import FileUploader from '@/components/FileUploader';
+import { ClockLoader } from 'react-spinners';
 
 interface IModalAddPDVs {
   open: boolean;
@@ -21,7 +22,7 @@ export default function ModalAddPDVs({ onClose, open }: IModalAddPDVs) {
   const {
     errors,
     handleSubmit,
-    isPending,
+    isLoading,
     register,
     carousselFile,
     handleFileSelect,
@@ -203,15 +204,19 @@ export default function ModalAddPDVs({ onClose, open }: IModalAddPDVs) {
                 </Button>
                 <Button
                   disabled={
+                    isLoading ||
                     !(
-                      isPending ||
                       !!carousselFile?.carrouselImage?.previewUrl ||
                       !!carousselFile?.carrouselImage?.file
                     )
                   }
                   type="submit"
                 >
-                  <span>Registrar</span>
+                  {isLoading ? (
+                    <ClockLoader size={20} />
+                  ) : (
+                    <span>Registrar</span>
+                  )}
                 </Button>
               </div>
             </div>

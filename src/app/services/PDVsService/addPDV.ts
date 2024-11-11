@@ -32,5 +32,7 @@ export async function addPDVs({
     telephone_number,
   };
   const res = await httpClient.post('/api/v1/partners/create', body);
-  return res.data.data;
+  console.log('resposta na service de res:', res);
+
+  return res;
 }
