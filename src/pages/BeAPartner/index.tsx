@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/Button';
 import SectionsEditWrapper from '@/components/ui/SectionsEditWrapper';
 import { RocketIcon } from 'lucide-react';
 import useBeAPartner from './useBeAPartner';
-import { ClipLoader } from 'react-spinners';
+import { ClockLoader } from 'react-spinners';
 
 export default function BeAPartner() {
   const {
@@ -30,6 +30,7 @@ export default function BeAPartner() {
         <div className="flex flex-col w-[456px] gap-10">
           <InputTypeWYSIWYG
             isEditable={isTitleEditable}
+            showEditButton
             onIsEditable={handleToggleIsTitleEditable}
             actualValue={title}
             onContentChange={content => setTitle(content)}
@@ -38,6 +39,7 @@ export default function BeAPartner() {
           <InputTypeWYSIWYG
             onIsEditable={handleToggleIsDescEditable}
             isEditable={isDescEditable}
+            showEditButton
             actualValue={descricao}
             onContentChange={content => setDescricao(content)}
             title="Descrição"
@@ -72,7 +74,7 @@ export default function BeAPartner() {
               <span>Publicar</span>
             </>
           ) : (
-            <ClipLoader size={20} color="red" />
+            <ClockLoader size={20} color="red" />
           )}
         </Button>
       </div>

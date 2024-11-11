@@ -63,18 +63,24 @@ const data = {
           icon: Rabbit,
           description: 'Seção Sobre da página',
         },
+        {
+          title: 'Missão e valores',
+          url: '/sections/mission_values',
+          icon: Rabbit,
+          description: 'Seção missão e valores da página',
+        },
         // {
         //   title: 'Detalhes',
         //   url: '/sections/details',
         //   icon: Rabbit,
         //   description: 'Detalhes da página',
         // },
-        {
-          title: 'Produtos',
-          url: '/sections/products',
-          icon: Rabbit,
-          description: 'Seção de produtos da página',
-        },
+        // {
+        //   title: 'Produtos',
+        //   url: '/sections/products',
+        //   icon: Rabbit,
+        //   description: 'Seção de produtos da página',
+        // },
         {
           title: 'Institucional',
           url: '/sections/institutional',

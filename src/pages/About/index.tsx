@@ -2,11 +2,11 @@ import FileUploader from '@/components/FileUploader';
 import InputTypeWYSIWYG from '@/components/InputTypeWYSIWYG';
 import SectionsEditWrapper from '@/components/ui/SectionsEditWrapper';
 import { RocketIcon } from 'lucide-react';
-import { ClipLoader } from 'react-spinners';
+import { ClockLoader } from 'react-spinners';
 import { Button } from '@/components/ui/Button';
 import useAbout from './useAbout';
 
-export default function Institutional() {
+export default function About() {
   const {
     descricao,
     image,
@@ -25,7 +25,7 @@ export default function Institutional() {
   } = useAbout();
 
   return (
-    <SectionsEditWrapper title="Institucional">
+    <SectionsEditWrapper title="Sobre">
       <div className="flex flex-col gap-8">
         <div className="max-w-[514px] flex flex-col gap-8">
           <InputTypeWYSIWYG
@@ -46,7 +46,7 @@ export default function Institutional() {
         <FileUploader
           actualImage={image}
           onFileSelect={(file, previewUrl) => {
-            handleFileSelect('image', file, previewUrl);
+            handleFileSelect('aboutImage', file, previewUrl);
             setisImageChanged(!isImageChanged);
           }}
           title="Imagem"
@@ -70,7 +70,7 @@ export default function Institutional() {
               <span>Publicar</span>
             </>
           ) : (
-            <ClipLoader size={20} color="red" />
+            <ClockLoader size={20} color="red" />
           )}
         </Button>
       </div>

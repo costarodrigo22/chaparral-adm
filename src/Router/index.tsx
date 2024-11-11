@@ -14,6 +14,7 @@ import BeAPartner from '@/pages/BeAPartner';
 import PDVs from '@/pages/PDVs';
 import Recipes from '@/pages/Recipes';
 import About from '@/pages/About';
+import MissionValues from '@/pages/MissionValues';
 
 export function Router() {
   return (
@@ -33,6 +34,7 @@ export function Router() {
             {/* <Route path="sections/details" element={<Details />} /> */}
             <Route path="sections/products" element={<Header />} />
             <Route path="sections/about" element={<About />} />
+            <Route path="sections/mission_values" element={<MissionValues />} />
             <Route path="sections/institutional" element={<Institutional />} />
             <Route path="sections/recipes" element={<Recipes />} />
             <Route path="sections/be-a-partner" element={<BeAPartner />} />
