@@ -9,15 +9,16 @@ import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import { Separator } from '@/components/ui/separator';
 import { Info, MapPinIcon } from 'lucide-react';
-import useModalAddPDVs from './useModalAddPDVs';
 import FileUploader from '@/components/FileUploader';
+import useModalEditPDVs from './useModalEditPDV';
 
-interface IModalAddPDVs {
+interface IModalEditPDV {
   open: boolean;
   onClose: () => void;
+  id: string;
 }
 
-export default function ModalAddPDVs({ onClose, open }: IModalAddPDVs) {
+export default function ModalEditPDV({ onClose, open, id }: IModalEditPDV) {
   const {
     errors,
     handleSubmit,
@@ -26,13 +27,13 @@ export default function ModalAddPDVs({ onClose, open }: IModalAddPDVs) {
     carousselFile,
     handleFileSelect,
     cancelReq,
-  } = useModalAddPDVs(onClose);
+  } = useModalEditPDVs(onClose, id);
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-[1004px]">
         <DialogHeader>
-          <DialogTitle>Novo PDV</DialogTitle>
+          <DialogTitle>Detalhes</DialogTitle>
         </DialogHeader>
 
         <Separator />
@@ -201,16 +202,7 @@ export default function ModalAddPDVs({ onClose, open }: IModalAddPDVs) {
                     Cancelar
                   </span>
                 </Button>
-                <Button
-                  disabled={
-                    !(
-                      isPending ||
-                      !!carousselFile?.carrouselImage?.previewUrl ||
-                      !!carousselFile?.carrouselImage?.file
-                    )
-                  }
-                  type="submit"
-                >
+                <Button disabled={isPending} type="submit">
                   <span>Registrar</span>
                 </Button>
               </div>

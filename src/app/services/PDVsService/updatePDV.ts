@@ -1,13 +1,15 @@
 import { httpClient } from '../httpClient';
 
 interface IUpdatePDV {
-  title: string;
+  id: string;
+  name: string;
   street: string;
   neighborhood: string;
   number: string;
   city: string;
   uf: string;
   cep: string;
+  telephone_number: string;
 }
 
 export async function updatePDV({
@@ -15,18 +17,21 @@ export async function updatePDV({
   neighborhood,
   number,
   street,
-  title,
+  name,
   uf,
+  telephone_number,
   cep,
+  id,
 }: IUpdatePDV) {
   const body = {
     city,
     neighborhood,
     number,
     street,
-    title,
+    telephone_number,
+    name,
     uf,
     cep,
   };
-  await httpClient.put('', body);
+  await httpClient.put(`/api/v1/partners/update/${id}`, body);
 }

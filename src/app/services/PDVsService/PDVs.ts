@@ -1,19 +1,19 @@
 import { httpClient } from '../httpClient';
 
+interface IPDV {
+  name: string;
+  id: string;
+}
+
 interface IPDVs {
-  data: {
-    title: string;
-    street: string;
-    neighborhood: string;
-    number: string;
-    city: string;
-    uf: string;
-    cep: string;
+  data: IPDV[];  // Corrigido para representar um array de objetos IPDV
+  meta: {
+    last_page: number;
   };
 }
 
 export async function PDVS() {
-  const { data } = await httpClient.get<IPDVs>('/api/');
+  const { data } = await httpClient.get<IPDVs>('/api/without/partners/get_all_paginated');
 
-  return data.data;
+  return data;
 }
