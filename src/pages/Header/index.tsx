@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/Button';
 import SectionsEditWrapper from '@/components/ui/SectionsEditWrapper';
 import { RocketIcon } from 'lucide-react';
 import useHeader from './useHeader';
-import { ClipLoader } from 'react-spinners';
+import { ClockLoader } from 'react-spinners';
 
 export default function Header() {
   const {
@@ -54,7 +54,7 @@ export default function Header() {
             disabled={isLoading || !(isFeaturedChanged || isLogoChanged)}
           >
             {isLoading ? (
-              <ClipLoader size={20} color="red" />
+              <ClockLoader size={20} color="red" />
             ) : (
               <>
                 <RocketIcon size={20} />

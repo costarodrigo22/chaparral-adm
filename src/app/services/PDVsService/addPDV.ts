@@ -1,32 +1,36 @@
 import { httpClient } from '../httpClient';
 
 interface IAddPDVs {
-  title: string;
   street: string;
+  name: string;
   neighborhood: string;
   number: string;
   city: string;
   uf: string;
   cep: string;
+  telephone_number: string;
 }
 
 export async function addPDVs({
   city,
+  name,
   neighborhood,
   number,
   street,
-  title,
   uf,
   cep,
+  telephone_number,
 }: IAddPDVs) {
   const body = {
+    name,
     city,
     neighborhood,
     number,
     street,
-    title,
     uf,
     cep,
+    telephone_number,
   };
-  await httpClient.post('', body);
+  const res = await httpClient.post('/api/v1/partners/create', body);
+  return res.data.data;
 }

@@ -1,6 +1,7 @@
 import { httpClient } from '../httpClient';
 
 export interface IAddRecipe {
+  id: string;
   recipe_preparation_mode: {
     preparation_method_description: string;
     preparation_method_icon_color: string;
@@ -19,10 +20,11 @@ export interface IAddRecipe {
   };
 }
 
-export async function addRecipe({
+export async function updateRecipe({
   home_recipe_card,
   recipe_ingredients,
   recipe_preparation_mode,
+  id,
 }: IAddRecipe) {
   const body = {
     recipe_preparation_mode: {
@@ -46,11 +48,5 @@ export async function addRecipe({
       final_color: home_recipe_card.final_color,
     },
   };
-
-  try {
-    const response = await httpClient.post('/api/v1/recipes/create', body);
-    return response.data;
-  } catch (error) {
-    console.error('Error adding recipe:', error);
-  }
+  await httpClient.put(`/api/v1/recipes/update/${id}`, body);
 }

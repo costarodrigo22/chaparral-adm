@@ -1,36 +1,35 @@
 import FileUploader from '@/components/FileUploader';
 import InputTypeWYSIWYG from '@/components/InputTypeWYSIWYG';
-import { Button } from '@/components/ui/Button';
 import SectionsEditWrapper from '@/components/ui/SectionsEditWrapper';
 import { RocketIcon } from 'lucide-react';
-import useBeAPartner from './useBeAPartner';
 import { ClockLoader } from 'react-spinners';
+import { Button } from '@/components/ui/Button';
+import useAbout from './useAbout';
 
-export default function BeAPartner() {
+export default function About() {
   const {
     descricao,
-    setDescricao,
-    setTitle,
-    title,
     image,
+    isDescEditable,
+    isImageChanged,
+    isLoading,
+    isTitleEditable,
+    title,
     handleFileSelect,
     handleSendData,
-    isLoading,
-    isDescEditable,
-    isTitleEditable,
     handleToggleIsDescEditable,
     handleToggleIsTitleEditable,
+    setDescricao,
+    setTitle,
     setisImageChanged,
-    isImageChanged,
-  } = useBeAPartner();
+  } = useAbout();
 
   return (
-    <SectionsEditWrapper title="Seja Parceiro">
-      <div className="flex gap-8 items-start">
-        <div className="flex flex-col w-[456px] gap-10">
+    <SectionsEditWrapper title="Sobre">
+      <div className="flex flex-col gap-8">
+        <div className="max-w-[514px] flex flex-col gap-8">
           <InputTypeWYSIWYG
             isEditable={isTitleEditable}
-            showEditButton
             onIsEditable={handleToggleIsTitleEditable}
             actualValue={title}
             onContentChange={content => setTitle(content)}
@@ -39,26 +38,23 @@ export default function BeAPartner() {
           <InputTypeWYSIWYG
             onIsEditable={handleToggleIsDescEditable}
             isEditable={isDescEditable}
-            showEditButton
             actualValue={descricao}
             onContentChange={content => setDescricao(content)}
             title="Descrição"
           />
         </div>
-        <div>
-          <FileUploader
-            title="Imagem"
-            actualImage={image}
-            height={328}
-            onFileSelect={(file, previewUrl) => {
-              handleFileSelect('image', file, previewUrl);
-              setisImageChanged(!isImageChanged);
-            }}
-            width={278}
-            suggestedHeight={785}
-            suggestedWidth={630}
-          />
-        </div>
+        <FileUploader
+          actualImage={image}
+          onFileSelect={(file, previewUrl) => {
+            handleFileSelect('aboutImage', file, previewUrl);
+            setisImageChanged(!isImageChanged);
+          }}
+          title="Imagem"
+          height={328}
+          width={514}
+          suggestedHeight={810}
+          suggestedWidth={1440}
+        />
       </div>
       <div className="w-full flex items-center justify-end mt-9">
         <Button

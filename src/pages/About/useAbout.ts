@@ -1,57 +1,34 @@
 import { httpClient } from '@/app/services/httpClient';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useCallback, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { z } from 'zod';
 
 interface infoBody {
   data: [
     {
       title: string;
       description: string;
-      link: string;
     },
   ];
 }
 
-const schema = z.object({
-  title: z.string().min(1, 'Título é obrigatório'),
-  description: z.string().min(1, 'Descrição é obrigatória'),
-  link: z
-    .string()
-    .url('Link deve ser uma URL válida')
-    .min(1, 'Link do vídeo é obrigatório'),
-});
-
-type FormData = z.infer<typeof schema>;
-
-export default function useInstitutional() {
+export default function useAbout() {
+  const [title, setTitle] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isImageChanged, setisImageChanged] = useState(false);
   const [isTitleEditable, setIsTitleEditable] = useState(false);
   const [isDescEditable, setIsDescEditable] = useState(false);
-  const [isLinkChanged, setIsLinkChanged] = useState(false);
+  const [descricao, setDescricao] = useState('');
   const [image, setImage] = useState('');
   const [fileInstitutional, setfileInstitutional] = useState<{
     [key: string]: { file: File | null; previewUrl: string | null };
   }>({});
 
-  const {
-    control,
-    register,
-    formState: { errors },
-    handleSubmit: hookFormHandleSubmit,
-    reset,
-    watch,
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      title: '',
-      description: '',
-      link: '',
-    },
-  });
+  function handleToggleIsTitleEditable() {
+    setIsTitleEditable(!isTitleEditable);
+  }
+  function handleToggleIsDescEditable() {
+    setIsDescEditable(!isDescEditable);
+  }
 
   const handleFileSelect = (
     key: string,
@@ -64,13 +41,10 @@ export default function useInstitutional() {
     }));
   };
 
-  async function handleSendData(data: FormData) {
-    console.log(data);
-
+  async function handleSendData() {
     const bodyInfo = {
-      title: data.title,
-      description: data.description,
-      link: data.link,
+      title: title,
+      description: descricao,
     };
 
     try {
@@ -101,11 +75,10 @@ export default function useInstitutional() {
       setisImageChanged(false);
       setIsDescEditable(false);
       setIsTitleEditable(false);
-      setIsLinkChanged(false);
     }
   }
 
-  const getBeAPartnersInfo = useCallback(async () => {
+  async function getBeAPartnersInfo() {
     try {
       setIsLoading(true);
       const infoRes = await httpClient.get<infoBody>(
@@ -115,11 +88,8 @@ export default function useInstitutional() {
         '/api/without/home_institutional_section/display_image',
       );
 
-      reset({
-        title: infoRes.data.data[0].title,
-        description: infoRes.data.data[0].description,
-        link: infoRes.data.data[0].link,
-      });
+      setDescricao(infoRes.data.data[0].description);
+      setTitle(infoRes.data.data[0].title);
       setImage(imageRes.data);
     } catch (error) {
       toast.error('Erro ao buscar dados!');
@@ -127,36 +97,32 @@ export default function useInstitutional() {
     } finally {
       setIsLoading(false);
     }
-  }, [reset]);
+  }
 
   useEffect(() => {
     getBeAPartnersInfo();
-  }, [getBeAPartnersInfo]);
-
-  useEffect(() => {
-    const subscription = watch((_value, { name }) => {
-      if (name === 'link') {
-        setIsLinkChanged(true);
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [watch]);
+  }, []);
 
   return {
-    control,
-    register,
-    errors,
-    hookFormHandleSubmit,
     handleSendData,
     setisImageChanged,
     isImageChanged,
+    handleToggleIsDescEditable,
+    handleToggleIsTitleEditable,
     isLoading,
     handleFileSelect,
+    setIsDescEditable,
+    setIsTitleEditable,
     isDescEditable,
-    isLinkChanged,
     isTitleEditable,
-    handleToggleIsDescEditable: () => setIsDescEditable(!isDescEditable),
-    handleToggleIsTitleEditable: () => setIsTitleEditable(!isTitleEditable),
+    title,
+    setTitle,
+    descricao,
+    setDescricao,
+    getBeAPartnersInfo,
     image,
+    setImage,
+    fileInstitutional,
+    setfileInstitutional,
   };
 }
