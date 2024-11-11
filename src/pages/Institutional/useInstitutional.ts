@@ -105,8 +105,7 @@ export default function useInstitutional() {
     }
   }
 
-  const getBeAPartnersInfo = useCallback( async () => {
-
+  const getBeAPartnersInfo = useCallback(async () => {
     try {
       setIsLoading(true);
       const infoRes = await httpClient.get<infoBody>(
@@ -128,7 +127,7 @@ export default function useInstitutional() {
     } finally {
       setIsLoading(false);
     }
-  }, [reset])
+  }, [reset]);
 
   useEffect(() => {
     getBeAPartnersInfo();

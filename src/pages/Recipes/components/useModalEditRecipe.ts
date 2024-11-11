@@ -7,21 +7,20 @@ import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
-export const RECIPES_QUERYKEY = ['RECIPES']
+export const RECIPES_QUERYKEY = ['RECIPES'];
 
 interface ResData {
   card: {
-    id: string,
-    base64: string,
+    id: string;
+    base64: string;
   };
   page: {
-    id: string,
-    base64: string,
+    id: string;
+    base64: string;
   };
 }
 
-export default function useModalEditRecipe(onClose: () => void, id:string) {
-
+export default function useModalEditRecipe(onClose: () => void, id: string) {
   const [activeTab, setActiveTab] = useState('header');
   const [dataRes, setDataRes] = useState<ResData | undefined>();
   const [isLoading, setIsLoading] = useState(false);
@@ -68,7 +67,7 @@ export default function useModalEditRecipe(onClose: () => void, id:string) {
       .max(7, 'Apenas HEXADECIMAL'),
   });
 
-  type FormSchema = z.infer<typeof recipeSchema>
+  type FormSchema = z.infer<typeof recipeSchema>;
 
   const handleNextStep = () => {
     if (activeTab === 'header') {
@@ -121,12 +120,12 @@ export default function useModalEditRecipe(onClose: () => void, id:string) {
   const { isPending, mutateAsync } = useMutation({
     mutationFn: RecipesService.updateRecipe,
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: RECIPES_QUERYKEY});
+      queryClient.invalidateQueries({ queryKey: RECIPES_QUERYKEY });
       reset();
       setfileRecipe({});
       onClose();
     },
-    onError: (error) => {
+    onError: error => {
       console.error('Erro ao editar receita:', error);
     },
   });
@@ -145,7 +144,7 @@ export default function useModalEditRecipe(onClose: () => void, id:string) {
     const bannerImageFile = fileRecipe['bannerImage']?.file;
 
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await mutateAsync({
         id: id,
         home_recipe_card: {
@@ -160,53 +159,68 @@ export default function useModalEditRecipe(onClose: () => void, id:string) {
           ingredients_icon_color: form.ingredients_icon_color,
         },
         recipe_preparation_mode: {
-          preparation_method_background_color: form.preparation_mode_background_color,
+          preparation_method_background_color:
+            form.preparation_mode_background_color,
           preparation_method_description: form.preparation_mode_description,
           preparation_method_icon_color: form.preparation_mode_icon_color,
         },
       });
       if (cardImageFile && dataRes?.card?.id) {
-        await uploadImage(cardImageFile, '/api/v1/recipes/create_card_image', dataRes?.card?.id);
+        await uploadImage(
+          cardImageFile,
+          '/api/v1/recipes/create_card_image',
+          dataRes?.card?.id,
+        );
       }
       if (bannerImageFile && dataRes?.page?.id) {
-        await uploadImage(bannerImageFile, '/api/v1/recipes/create_page_image', dataRes?.page?.id);
+        await uploadImage(
+          bannerImageFile,
+          '/api/v1/recipes/create_page_image',
+          dataRes?.page?.id,
+        );
       }
-      toast.success('Receita editada com sucesso!')
+      toast.success('Receita editada com sucesso!');
     } catch (error) {
       console.error(error);
-      toast.error('Ocorreu um erro ao editar a receita!')
+      toast.error('Ocorreu um erro ao editar a receita!');
     } finally {
-      setIsLoading(false)
-      queryClient.invalidateQueries({queryKey: RECIPES_QUERYKEY});
+      setIsLoading(false);
+      queryClient.invalidateQueries({ queryKey: RECIPES_QUERYKEY });
     }
   };
 
   const handleGetEditData = useCallback(async () => {
     try {
-      setIsLoading(true)
-      const res = await httpClient.get<IRecipes>(`/api/v1/recipes/get_recipe_info/${id}`);
+      setIsLoading(true);
+      const res = await httpClient.get<IRecipes>(
+        `/api/v1/recipes/get_recipe_info/${id}`,
+      );
       console.log(res);
-      const data = res.data.data
+      const data = res.data.data;
 
-      if (data)(
-        setDataRes(data)
-      )
+      if (data) setDataRes(data);
       reset({
         name: data.card.name,
         card_recipe_description: data.card.description,
         card_recipe_start_color: data.card.start_color,
         card_recipe_final_color: data.card.final_color,
-        ingredients_description: data.page_recipe_ingredients.ingredients_description,
-        ingredients_icon_color: data.page_recipe_ingredients.ingredients_icon_color,
-        ingredients_background_color: data.page_recipe_ingredients.ingredients_background_color,
-        preparation_mode_description: data.page_recipe_preparation_mode.preparation_method_description,
-        preparation_mode_icon_color: data.page_recipe_preparation_mode.preparation_method_icon_color,
-        preparation_mode_background_color: data.page_recipe_preparation_mode.preparation_method_background_color,
+        ingredients_description:
+          data.page_recipe_ingredients.ingredients_description,
+        ingredients_icon_color:
+          data.page_recipe_ingredients.ingredients_icon_color,
+        ingredients_background_color:
+          data.page_recipe_ingredients.ingredients_background_color,
+        preparation_mode_description:
+          data.page_recipe_preparation_mode.preparation_method_description,
+        preparation_mode_icon_color:
+          data.page_recipe_preparation_mode.preparation_method_icon_color,
+        preparation_mode_background_color:
+          data.page_recipe_preparation_mode.preparation_method_background_color,
       });
     } catch (error) {
       console.log(error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }, [id, reset]);
 

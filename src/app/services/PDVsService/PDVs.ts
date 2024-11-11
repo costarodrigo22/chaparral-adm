@@ -6,14 +6,16 @@ interface IPDV {
 }
 
 interface IPDVs {
-  data: IPDV[];  // Corrigido para representar um array de objetos IPDV
+  data: IPDV[]; // Corrigido para representar um array de objetos IPDV
   meta: {
     last_page: number;
   };
 }
 
 export async function PDVS() {
-  const { data } = await httpClient.get<IPDVs>('/api/without/partners/get_all_paginated');
+  const { data } = await httpClient.get<IPDVs>(
+    '/api/without/partners/get_all_paginated',
+  );
 
   return data;
 }

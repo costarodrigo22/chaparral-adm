@@ -11,12 +11,13 @@ export interface IPDVEdit {
     uf: string;
     cep: string;
     telephone_number: string;
-  }
+  };
 }
 
 export async function pdvEdit(id: string) {
-
-  const { data } = await httpClient.get<IPDVEdit>(`/api/without/partners/find_by_id/${id}`);
+  const { data } = await httpClient.get<IPDVEdit>(
+    `/api/without/partners/find_by_id/${id}`,
+  );
 
   return data.data;
 }

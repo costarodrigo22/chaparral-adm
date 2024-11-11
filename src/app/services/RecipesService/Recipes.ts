@@ -11,7 +11,9 @@ interface IRecipesResponse {
 }
 
 export async function recipes() {
-  const { data } = await httpClient.get<IRecipesResponse>('/api/without/recipes_cards/get_list');
+  const { data } = await httpClient.get<IRecipesResponse>(
+    '/api/without/recipes_cards/get_list',
+  );
 
   return data;
 }

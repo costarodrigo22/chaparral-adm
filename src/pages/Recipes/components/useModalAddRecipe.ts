@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
-export const RECIPES_QUERYKEY = ['RECIPES']
+export const RECIPES_QUERYKEY = ['RECIPES'];
 
 export default function useModalAddRecipe(onClose: () => void) {
   function onCancel() {
@@ -47,7 +47,7 @@ export default function useModalAddRecipe(onClose: () => void) {
       .max(7, 'Apenas HEXADECIMAL'),
   });
 
-  type FormSchema = z.infer<typeof recipeSchema>
+  type FormSchema = z.infer<typeof recipeSchema>;
 
   const [activeTab, setActiveTab] = useState('header');
   const [fileRecipe, setfileRecipe] = useState<{
@@ -100,14 +100,13 @@ export default function useModalAddRecipe(onClose: () => void) {
     },
   });
 
-
   const queryClient = useQueryClient();
 
   const { isPending, mutateAsync } = useMutation({
     mutationFn: RecipesService.createFullRecipe,
     onSuccess: () => {
-      toast.success('Receita criada com sucesso!')
-      queryClient.invalidateQueries({queryKey: RECIPES_QUERYKEY});
+      toast.success('Receita criada com sucesso!');
+      queryClient.invalidateQueries({ queryKey: RECIPES_QUERYKEY });
       reset();
       setfileRecipe({});
       onClose();
@@ -142,7 +141,8 @@ export default function useModalAddRecipe(onClose: () => void) {
           ingredients_icon_color: data.ingredients_icon_color,
         },
         recipe_preparation_mode: {
-          preparation_method_background_color: data.preparation_mode_background_color,
+          preparation_method_background_color:
+            data.preparation_mode_background_color,
           preparation_method_description: data.preparation_mode_description,
           preparation_method_icon_color: data.preparation_mode_icon_color,
         },
@@ -152,7 +152,6 @@ export default function useModalAddRecipe(onClose: () => void) {
       console.error(error);
     }
   };
-
 
   return {
     onSubmit,

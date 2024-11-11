@@ -3,9 +3,7 @@ import { PDVsService } from '@/app/services/PDVsService';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-
 export default function usePDVs() {
-
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openModalDeletePDV, setOpenModalDeletePDV] = useState(false);
@@ -49,5 +47,22 @@ export default function usePDVs() {
     }
   }
 
-return { handleDeletePDV, isPendingDeleteUser, id, data, searchTerm, setOpenModalDeletePDV, filteredData, isFetching, headersTable,setOpenAddModal, openAddModal, openEditModal, setOpenEditModal, openModalDeletePDV, setId, setSearchTerm }
+  return {
+    handleDeletePDV,
+    isPendingDeleteUser,
+    id,
+    data,
+    searchTerm,
+    setOpenModalDeletePDV,
+    filteredData,
+    isFetching,
+    headersTable,
+    setOpenAddModal,
+    openAddModal,
+    openEditModal,
+    setOpenEditModal,
+    openModalDeletePDV,
+    setId,
+    setSearchTerm,
+  };
 }

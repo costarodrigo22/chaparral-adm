@@ -10,7 +10,7 @@ export async function createFullRecipe({
   home_recipe_card,
   recipe_ingredients,
   recipe_preparation_mode,
-  imageFiles
+  imageFiles,
 }: ICreateFullRecipe) {
   try {
     const recipeResponse = await addRecipe({
@@ -23,11 +23,17 @@ export async function createFullRecipe({
     const pageId = recipeResponse.data?.page?.id;
 
     if (!cardId || !pageId) {
-      throw new Error("Recipe ID or Card ID is missing in the response");
+      throw new Error('Recipe ID or Card ID is missing in the response');
     }
 
-    const cardImageResponse = await addCardImage({ id: cardId, file: imageFiles[0] });
-    const pageImageResponse = await addPageImage({ id: pageId, file: imageFiles[1] });
+    const cardImageResponse = await addCardImage({
+      id: cardId,
+      file: imageFiles[0],
+    });
+    const pageImageResponse = await addPageImage({
+      id: pageId,
+      file: imageFiles[1],
+    });
 
     return {
       recipeResponse,

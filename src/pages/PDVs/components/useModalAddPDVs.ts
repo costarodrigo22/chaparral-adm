@@ -6,7 +6,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 export default function useModalAddPDVs(onClose: () => void) {
-
   const [carousselFile, setCarousselFile] = useState<{
     [key: string]: { file: File | null; previewUrl: string | null };
   }>({});
@@ -44,7 +43,11 @@ export default function useModalAddPDVs(onClose: () => void) {
     }));
   };
 
-  const { isPending, mutateAsync, data: idData } = useMutation({
+  const {
+    isPending,
+    mutateAsync,
+    data: idData,
+  } = useMutation({
     mutationKey: ['PDVS'],
     mutationFn: PDVsService.addPDVs,
   });
@@ -68,7 +71,7 @@ export default function useModalAddPDVs(onClose: () => void) {
       console.log(idData.id);
 
       reset();
-      setCarousselFile({})
+      setCarousselFile({});
       onClose();
       toast.success('PDV cadastrado!');
     } catch {
@@ -80,9 +83,17 @@ export default function useModalAddPDVs(onClose: () => void) {
 
   function cancelReq() {
     reset();
-    setCarousselFile({})
+    setCarousselFile({});
     onClose();
   }
 
-  return { register, cancelReq, errors, handleSubmit, isPending, handleFileSelect, carousselFile  };
+  return {
+    register,
+    cancelReq,
+    errors,
+    handleSubmit,
+    isPending,
+    handleFileSelect,
+    carousselFile,
+  };
 }

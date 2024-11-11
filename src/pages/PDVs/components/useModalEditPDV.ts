@@ -8,7 +8,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { httpClient } from '@/app/services/httpClient';
 
 export default function useModalEditPDVs(onClose: () => void, id: string) {
-
   const [carousselFile, setCarousselFile] = useState<{
     [key: string]: { file: File | null; previewUrl: string | null };
   }>({});
@@ -103,7 +102,9 @@ export default function useModalEditPDVs(onClose: () => void, id: string) {
 
   const handleGetEditData = useCallback(async () => {
     try {
-      const res = await httpClient.get(`/api/without/partners/find_by_id/${id}`);
+      const res = await httpClient.get(
+        `/api/without/partners/find_by_id/${id}`,
+      );
 
       reset({
         name: res.data.data.name || '',
@@ -135,5 +136,13 @@ export default function useModalEditPDVs(onClose: () => void, id: string) {
     }
   }, [handleGetEditData, id]);
 
-  return { register, cancelReq, errors, handleSubmit, isPending, handleFileSelect, carousselFile };
+  return {
+    register,
+    cancelReq,
+    errors,
+    handleSubmit,
+    isPending,
+    handleFileSelect,
+    carousselFile,
+  };
 }
