@@ -1,14 +1,17 @@
 import { httpClient } from '../httpClient';
 
 interface IRecipes {
-  data: {
-    title: string;
-    id: string;
-  };
+  name: string;
+  id: string;
+}
+
+interface IRecipesResponse {
+  data: IRecipes[];
+  last_page: number;
 }
 
 export async function recipes() {
-  const { data } = await httpClient.get<IRecipes>('/api/');
+  const { data } = await httpClient.get<IRecipesResponse>('/api/without/recipes_cards/get_list');
 
-  return data.data;
+  return data;
 }

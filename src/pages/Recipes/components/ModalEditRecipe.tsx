@@ -12,8 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ArrowLeftIcon, ArrowRightIcon, InfoIcon } from 'lucide-react';
 import ColorPicker from '@/components/ColorPicker';
 import { Controller } from 'react-hook-form';
-import useModalAddRecipe from './useModalAddRecipe';
-import { useEffect } from 'react';
+import useModalEditRecipe from './useModalEditRecipe';
 import { Label } from '@/components/ui/Label';
 import { Input } from '@/components/ui/Input';
 import { ClockLoader } from 'react-spinners';
@@ -21,36 +20,35 @@ import { ClockLoader } from 'react-spinners';
 interface IModalAddRecipe {
   onClose: () => void;
   open: boolean;
+  id: string;
 }
 
-export default function ModalAddRecipes({ onClose, open }: IModalAddRecipe) {
+export default function ModalEditRecipes({
+  onClose,
+  open,
+  id,
+}: IModalAddRecipe) {
   const {
     control,
     errors,
     activeTab,
     setActiveTab,
-    fileRecipe,
+    isLoading,
     handleFileSelect,
-    isPending,
     handleNextStep,
+    register,
     handlePreviousStep,
     handleSubmit,
+    dataRes,
     onSubmit,
     onCancel,
-    watch,
-    register,
-  } = useModalAddRecipe(onClose);
+  } = useModalEditRecipe(onClose, id);
 
-  useEffect(() => {
-    if (!fileRecipe.cardImage || !watch('card_recipe_description')) {
-      setActiveTab('header');
-    }
-  }, [fileRecipe, watch, setActiveTab]);
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-[713px] max-h-[95vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Nova Receita</DialogTitle>
+          <DialogTitle>Editar receita</DialogTitle>
         </DialogHeader>
 
         <Separator />
@@ -59,14 +57,7 @@ export default function ModalAddRecipes({ onClose, open }: IModalAddRecipe) {
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList>
               <TabsTrigger value="header">Cabeçalho</TabsTrigger>
-              <TabsTrigger
-                disabled={
-                  !fileRecipe.cardImage || !watch('card_recipe_description')
-                }
-                value="recipeData"
-              >
-                Dados da receita
-              </TabsTrigger>
+              <TabsTrigger value="recipeData">Dados da receita</TabsTrigger>
             </TabsList>
             <TabsContent value="header">
               <div className="w-full flex flex-col gap-5 mt-9">
@@ -89,11 +80,12 @@ export default function ModalAddRecipes({ onClose, open }: IModalAddRecipe) {
                   suggestedHeight={200}
                   suggestedWidth={355}
                   title="Imagem do card"
-                  actualImage={fileRecipe?.cardImage?.previewUrl || undefined}
+                  actualImage={dataRes?.card?.base64}
                   onFileSelect={(file, previewUrl) => {
                     handleFileSelect('cardImage', file, previewUrl);
                   }}
                 />
+
                 <div className="w-full flex flex-col">
                   <div className="w-full">
                     <Controller
@@ -172,13 +164,7 @@ export default function ModalAddRecipes({ onClose, open }: IModalAddRecipe) {
                     Cancelar
                   </span>
                 </Button>
-                <Button
-                  onClick={handleNextStep}
-                  type="button"
-                  disabled={
-                    !fileRecipe.cardImage || !watch('card_recipe_description')
-                  }
-                >
+                <Button onClick={handleNextStep} type="button">
                   <div className="flex gap-2 items-center justify-center">
                     <span>Continuar</span>
                     <ArrowRightIcon size={20} />
@@ -192,13 +178,14 @@ export default function ModalAddRecipes({ onClose, open }: IModalAddRecipe) {
                   height={200}
                   width={520}
                   suggestedHeight={550}
-                  actualImage={fileRecipe?.bannerImage?.previewUrl || undefined}
+                  actualImage={dataRes?.page?.base64}
                   suggestedWidth={1340}
                   title="Banner da receita"
                   onFileSelect={(file, previewUrl) => {
                     handleFileSelect('bannerImage', file, previewUrl);
                   }}
                 />
+
                 <div className="flex items-center gap-5 h-auto">
                   <div className="w-full h-full flex flex-col">
                     <Controller
@@ -340,18 +327,15 @@ export default function ModalAddRecipes({ onClose, open }: IModalAddRecipe) {
                   <Button
                     type="button"
                     onClick={() => onCancel()}
-                    disabled={isPending}
+                    disabled={isLoading}
                     className="bg-white hover:bg-slate-100 border border-[#E2E8F0] dark:border-[#222222] dark:bg-black dark:hover:opacity-85"
                   >
                     <span className="text-[#0F172A] dark:text-white">
                       Cancelar
                     </span>
                   </Button>
-                  <Button
-                    type="submit"
-                    disabled={!fileRecipe.bannerImage || isPending}
-                  >
-                    {isPending ? (
+                  <Button type="submit" disabled={isLoading}>
+                    {isLoading ? (
                       <ClockLoader size={20} />
                     ) : (
                       <div className="flex gap-2 items-center justify-center">

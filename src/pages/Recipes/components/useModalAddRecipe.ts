@@ -3,8 +3,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
-export const RECIPES_QUERYKEY = ['recipes']
+export const RECIPES_QUERYKEY = ['RECIPES']
 
 export default function useModalAddRecipe(onClose: () => void) {
   function onCancel() {
@@ -14,6 +15,7 @@ export default function useModalAddRecipe(onClose: () => void) {
   }
 
   const recipeSchema = z.object({
+    name: z.string().min(1, 'Nome da receita é obrigatório'),
     card_recipe_description: z.string().min(1, 'Descrição é obrigatória'),
     card_recipe_start_color: z
       .string()
@@ -80,10 +82,12 @@ export default function useModalAddRecipe(onClose: () => void) {
     handleSubmit,
     watch,
     reset,
+    register,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(recipeSchema),
     defaultValues: {
+      name: '',
       card_recipe_description: '',
       card_recipe_start_color: '#FFFFFF',
       card_recipe_final_color: '#FFFFFF',
@@ -102,13 +106,14 @@ export default function useModalAddRecipe(onClose: () => void) {
   const { isPending, mutateAsync } = useMutation({
     mutationFn: RecipesService.createFullRecipe,
     onSuccess: () => {
+      toast.success('Receita criada com sucesso!')
       queryClient.invalidateQueries({queryKey: RECIPES_QUERYKEY});
       reset();
       setfileRecipe({});
       onClose();
     },
-    onError: (error) => {
-      console.error('Erro ao criar receita completa com imagens:', error);
+    onError: () => {
+      console.error('Ocorreu um erro ao criar a receita:');
     },
   });
 
@@ -126,6 +131,7 @@ export default function useModalAddRecipe(onClose: () => void) {
     try {
       await mutateAsync({
         home_recipe_card: {
+          name: data.name,
           description: data.card_recipe_description,
           start_color: data.card_recipe_start_color,
           final_color: data.card_recipe_final_color,
@@ -140,7 +146,7 @@ export default function useModalAddRecipe(onClose: () => void) {
           preparation_method_description: data.preparation_mode_description,
           preparation_method_icon_color: data.preparation_mode_icon_color,
         },
-        imageFiles, // Inclui os arquivos de imagem na chamada
+        imageFiles,
       });
     } catch (error) {
       console.error(error);
@@ -161,6 +167,7 @@ export default function useModalAddRecipe(onClose: () => void) {
     errors,
     handleFileSelect,
     handlePreviousStep,
+    register,
     handleNextStep,
   };
 }
