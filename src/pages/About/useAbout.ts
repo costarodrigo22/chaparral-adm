@@ -3,11 +3,10 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 interface infoBody {
-  data:
-    {
-      title: string;
-      description: string;
-    },
+  data: {
+    title: string;
+    description: string;
+  };
 }
 
 export default function useAbout() {
@@ -41,8 +40,8 @@ export default function useAbout() {
   };
 
   async function handleSendData() {
-    console.log("Enviando dados:", { title, descricao });
-    console.log("fileInstitutional:", fileInstitutional);
+    console.log('Enviando dados:', { title, descricao });
+    console.log('fileInstitutional:', fileInstitutional);
 
     const bodyInfo = {
       title: title,
@@ -54,19 +53,28 @@ export default function useAbout() {
 
       // Envia título e descrição
       await httpClient.put('/api/v1/about_header/update', bodyInfo);
-      console.log("Título e descrição enviados com sucesso");
+      console.log('Título e descrição enviados com sucesso');
 
       // Envia a imagem se estiver presente
-      if (fileInstitutional['aboutImage'] && fileInstitutional['aboutImage'].file) {
+      if (
+        fileInstitutional['aboutImage'] &&
+        fileInstitutional['aboutImage'].file
+      ) {
         const formDataInstitutional = new FormData();
-        formDataInstitutional.append('file', fileInstitutional['aboutImage'].file);
-        await httpClient.post('/api/v1/about_header/submit_image', formDataInstitutional);
-        console.log("Imagem enviada com sucesso");
+        formDataInstitutional.append(
+          'file',
+          fileInstitutional['aboutImage'].file,
+        );
+        await httpClient.post(
+          '/api/v1/about_header/submit_image',
+          formDataInstitutional,
+        );
+        console.log('Imagem enviada com sucesso');
       }
 
       toast.success('Informações enviadas com sucesso!');
     } catch (error) {
-      console.error("Erro ao enviar dados:", error);
+      console.error('Erro ao enviar dados:', error);
       toast.error('Erro ao enviar os dados');
     } finally {
       setIsLoading(false);
@@ -75,8 +83,6 @@ export default function useAbout() {
       setIsTitleEditable(false);
     }
   }
-
-
 
   async function getAboutInfo() {
     try {

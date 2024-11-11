@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { httpClient } from '@/app/services/httpClient';
 export default function useModalAddPDVs(onClose: () => void) {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const [carousselFile, setCarousselFile] = useState<{
     [key: string]: { file: File | null; previewUrl: string | null };
   }>({});
@@ -16,10 +16,16 @@ export default function useModalAddPDVs(onClose: () => void) {
     name: z.string().min(1, 'Nome é obrigatório'),
     street: z.string().min(1, 'Rua é obrigatório'),
     neighborhood: z.string().min(1, 'Bairro é obrigatório'),
-    telephone_number: z.string().min(1, 'Bairro é obrigatório').max(11, 'Apenas DDD e Número'),
+    telephone_number: z
+      .string()
+      .min(1, 'Bairro é obrigatório')
+      .max(11, 'Apenas DDD e Número'),
     number: z.string().min(1, 'Número é obrigatório'),
     city: z.string().min(1, 'Cidade é obrigatório'),
-    uf: z.string().min(1, 'UF é obrigatório').max(2,'Apenas a Sigla do estado, ex: MA'),
+    uf: z
+      .string()
+      .min(1, 'UF é obrigatório')
+      .max(2, 'Apenas a Sigla do estado, ex: MA'),
     cep: z.string().min(1, 'CEP é obrigatório').max(9, 'CEP inválido'),
   });
 
@@ -45,11 +51,7 @@ export default function useModalAddPDVs(onClose: () => void) {
     }));
   };
 
-
-  const {
-    isPending,
-    mutateAsync,
-  } = useMutation({
+  const { isPending, mutateAsync } = useMutation({
     mutationKey: ['PDVS'],
     mutationFn: PDVsService.addPDVs,
   });
@@ -68,7 +70,7 @@ export default function useModalAddPDVs(onClose: () => void) {
     const carousselImageFile = carousselFile['carrouselImage']?.file;
 
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const result = await mutateAsync({
         name: data.name,
         cep: data.cep,
@@ -84,7 +86,11 @@ export default function useModalAddPDVs(onClose: () => void) {
 
       const id = result?.data?.id;
       if (carousselImageFile && id) {
-        await uploadImage(carousselImageFile, '/api/v1/partners/submit_image', id);
+        await uploadImage(
+          carousselImageFile,
+          '/api/v1/partners/submit_image',
+          id,
+        );
       }
 
       reset();
@@ -94,11 +100,10 @@ export default function useModalAddPDVs(onClose: () => void) {
     } catch {
       toast.error('Erro ao adicionar um PDV!');
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
       queryClient.invalidateQueries({ queryKey: ['PDVS'] });
     }
   });
-
 
   function cancelReq() {
     reset();

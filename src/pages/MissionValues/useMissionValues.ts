@@ -16,15 +16,17 @@ interface MissionValuesResponse {
   };
 }
 export default function useMissionValues() {
-
   const [isLoading, setIsLoading] = useState(false);
   const [isMissionDescEditable, setIsMissionDescEditable] = useState(false);
   const [isSubTitleEditable, setIsSubTitleEditable] = useState(false);
   const [isValuesDescEditable, setIsValuesDescEditable] = useState(false);
 
-  const handleToggleIsMissionDescEditable = () => setIsMissionDescEditable(!isMissionDescEditable);
-  const handleToggleIsSubTitleEditable = () => setIsSubTitleEditable(!isSubTitleEditable);
-  const handleToggleIsValuesDescEditable = () => setIsValuesDescEditable(!isValuesDescEditable);
+  const handleToggleIsMissionDescEditable = () =>
+    setIsMissionDescEditable(!isMissionDescEditable);
+  const handleToggleIsSubTitleEditable = () =>
+    setIsSubTitleEditable(!isSubTitleEditable);
+  const handleToggleIsValuesDescEditable = () =>
+    setIsValuesDescEditable(!isValuesDescEditable);
 
   const schema = z.object({
     missionDesc: z.string().min(1, 'Descrição da missão é obrigatória'),
@@ -34,7 +36,12 @@ export default function useMissionValues() {
 
   type FormData = z.infer<typeof schema>;
 
-  const { reset, control, formState: { errors, isValid }, handleSubmit: hookFormHandleSubmit } = useForm<FormData>({
+  const {
+    reset,
+    control,
+    formState: { errors, isValid },
+    handleSubmit: hookFormHandleSubmit,
+  } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: { subtitle: '', missionDesc: '', valuesDesc: '' },
     mode: 'onChange',
@@ -43,7 +50,9 @@ export default function useMissionValues() {
   const getAboutInfo = useCallback(async () => {
     try {
       setIsLoading(true);
-      const infoRes = await httpClient.get<MissionValuesResponse>('/api/without/about_mission_and_values/get');
+      const infoRes = await httpClient.get<MissionValuesResponse>(
+        '/api/without/about_mission_and_values/get',
+      );
       reset({
         missionDesc: infoRes.data.data.mission_description,
         valuesDesc: infoRes.data.data.values_description,
@@ -82,5 +91,18 @@ export default function useMissionValues() {
     }
   }
 
-  return { handleSendData, control, errors, isValid, hookFormHandleSubmit, handleToggleIsMissionDescEditable, handleToggleIsSubTitleEditable, handleToggleIsValuesDescEditable, isLoading, isSubTitleEditable, isMissionDescEditable, isValuesDescEditable }
+  return {
+    handleSendData,
+    control,
+    errors,
+    isValid,
+    hookFormHandleSubmit,
+    handleToggleIsMissionDescEditable,
+    handleToggleIsSubTitleEditable,
+    handleToggleIsValuesDescEditable,
+    isLoading,
+    isSubTitleEditable,
+    isMissionDescEditable,
+    isValuesDescEditable,
+  };
 }

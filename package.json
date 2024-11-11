@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "ci:lint": "prettier --check src",
+    "ci:prettier": "prettier --write src",
     "typecheck": "tsc --noEmit",
     "ci:tests": "vitest run"
   },
