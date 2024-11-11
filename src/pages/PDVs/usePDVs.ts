@@ -32,6 +32,7 @@ export default function usePDVs() {
       mutationFn: PDVsService.deletePDV,
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['PDVS'] });
+
         toast.success('PDV deletado com sucesso!');
       },
       onError: () => {

@@ -1,100 +1,85 @@
 import InputTypeWYSIWYG from '@/components/InputTypeWYSIWYG';
 import { Button } from '@/components/ui/Button';
 import SectionsEditWrapper from '@/components/ui/SectionsEditWrapper';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { RocketIcon } from 'lucide-react';
-import { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+
+import { Controller } from 'react-hook-form';
 import { ClockLoader } from 'react-spinners';
-import { toast } from 'sonner';
-import { z } from 'zod';
+import useMissionValues from './useMissionValues';
 
 export default function MissionValues() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isTitleEditable, setIsTitleEditable] = useState(false);
-  const [isDescEditable, setIsDescEditable] = useState(false);
-
-  function handleToggleIsTitleEditable() {
-    setIsTitleEditable(!isTitleEditable);
-  }
-
-  function handleToggleIsDescEditable() {
-    setIsDescEditable(!isDescEditable);
-  }
-
-  const schema = z.object({
-    title: z.string().min(1, 'Título é obrigatório'),
-    description: z.string().min(1, 'Descrição é obrigatória'),
-  });
-
-  type FormData = z.infer<typeof schema>;
-
   const {
+    isMissionDescEditable,
+    isSubTitleEditable,
+    isValuesDescEditable,
     control,
-    formState: { errors, isValid },
-    handleSubmit: hookFormHandleSubmit,
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      title: '',
-      description: '',
-    },
-    mode: 'onChange',
-  });
-
-  async function handleSendData(data: FormData) {
-    setIsLoading(true);
-    try {
-      console.log('Enviando dados:', data);
-      setIsTitleEditable(false);
-      setIsDescEditable(false);
-      toast.success('Dados atualizados com sucesso!');
-    } catch (error) {
-      console.error('Erro ao enviar dados:', error);
-      toast.error('Ocorreu um erro ao atualizar os dados!');
-    } finally {
-      setIsLoading(false);
-    }
-  }
+    errors,
+    handleSendData,
+    handleToggleIsMissionDescEditable,
+    handleToggleIsSubTitleEditable,
+    handleToggleIsValuesDescEditable,
+    hookFormHandleSubmit,
+    isLoading,
+    isValid,
+  } = useMissionValues();
 
   return (
     <SectionsEditWrapper title="Missão e Valores">
       <form onSubmit={hookFormHandleSubmit(handleSendData)}>
+        <Controller
+          name="subtitle"
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <InputTypeWYSIWYG
+              isEditable={isSubTitleEditable}
+              onIsEditable={handleToggleIsSubTitleEditable}
+              showEditButton
+              actualValue={value}
+              onContentChange={onChange}
+              title="Subtítulo"
+            />
+          )}
+        />
+        {errors.subtitle && (
+          <p className="text-red-500 mt-[-50px]">{errors.subtitle.message}</p>
+        )}
         <div className="flex w-full flex-col h-full gap-9">
           <Controller
-            name="title"
+            name="missionDesc"
             control={control}
             render={({ field: { onChange, value } }) => (
               <InputTypeWYSIWYG
-                isEditable={isTitleEditable}
-                onIsEditable={handleToggleIsTitleEditable}
+                isEditable={isMissionDescEditable}
+                onIsEditable={handleToggleIsMissionDescEditable}
                 showEditButton
                 actualValue={value}
                 onContentChange={onChange}
-                title="Título"
+                title="Descrição (Missão)"
               />
             )}
           />
-          {errors.title && (
-            <p className="text-red-500 mt-[-50px]">{errors.title.message}</p>
+          {errors.missionDesc && (
+            <p className="text-red-500 mt-[-50px]">
+              {errors.missionDesc.message}
+            </p>
           )}
           <Controller
-            name="description"
+            name="valuesDesc"
             control={control}
             render={({ field: { onChange, value } }) => (
               <InputTypeWYSIWYG
-                isEditable={isDescEditable}
-                onIsEditable={handleToggleIsDescEditable}
+                isEditable={isValuesDescEditable}
+                onIsEditable={handleToggleIsValuesDescEditable}
                 showEditButton
                 actualValue={value}
                 onContentChange={onChange}
-                title="Descrição"
+                title="Descrição (Valores)"
               />
             )}
           />
-          {errors.description && (
+          {errors.valuesDesc && (
             <p className="text-red-500 mt-[-50px]">
-              {errors.description.message}
+              {errors.valuesDesc.message}
             </p>
           )}
         </div>
@@ -103,7 +88,13 @@ export default function MissionValues() {
             className="flex gap-3 items-center"
             onClick={hookFormHandleSubmit(handleSendData)}
             disabled={
-              isLoading || !(isTitleEditable || isDescEditable) || !isValid
+              isLoading ||
+              !(
+                isMissionDescEditable ||
+                isValuesDescEditable ||
+                isSubTitleEditable
+              ) ||
+              !isValid
             }
           >
             {!isLoading ? (

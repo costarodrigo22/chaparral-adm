@@ -49,7 +49,7 @@ export default function useBeAPartner() {
 
     try {
       setIsLoading(true);
-      await httpClient.post(
+      await httpClient.put(
         '/api/v1/home_be_a_partner_section/update_info',
         bodyInfo,
       );

@@ -75,7 +75,7 @@ export default function useInstitutional() {
 
     try {
       setIsLoading(true);
-      await httpClient.post(
+      await httpClient.put(
         '/api/v1/home_institutional_section/update_info',
         bodyInfo,
       );

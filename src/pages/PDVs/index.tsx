@@ -31,21 +31,30 @@ export default function PDVs() {
   return (
     <section className="my-9 mx-10 flex flex-col gap-9">
       <ModalAddPDVs
-        onClose={() => setOpenAddModal(false)}
+        onClose={() => {
+          setOpenAddModal(false);
+        }}
         open={openAddModal}
       />
       <ModalEditPDV
         id={id}
-        onClose={() => setOpenEditModal(false)}
+        onClose={() => {
+          setOpenEditModal(false);
+        }}
         open={openEditModal}
+        key={`${id}-${isFetching}`}
       />
+
       <ModalConfirm
         open={openModalDeletePDV}
         isLoading={isPendingDeleteUser}
         title="Deseja excluir?"
         description="O PDV será excluído permanentemente"
-        onClose={() => setOpenModalDeletePDV(false)}
+        onClose={() => {
+          setOpenModalDeletePDV(false);
+        }}
         onExecute={handleDeletePDV}
+        key={id}
       />
 
       <header className="flex justify-between bg-white dark:bg-black w-full h-auto py-9 px-8 rounded-[10px] shadow-sections dark:shadow-sectionsDark">

@@ -11,6 +11,7 @@ import { Separator } from '@/components/ui/separator';
 import { Info, MapPinIcon } from 'lucide-react';
 import FileUploader from '@/components/FileUploader';
 import useModalEditPDVs from './useModalEditPDV';
+import { ClockLoader } from 'react-spinners';
 
 interface IModalEditPDV {
   open: boolean;
@@ -24,13 +25,13 @@ export default function ModalEditPDV({ onClose, open, id }: IModalEditPDV) {
     handleSubmit,
     isPending,
     register,
-    carousselFile,
+    actualImage,
     handleFileSelect,
     cancelReq,
   } = useModalEditPDVs(onClose, id);
 
   return (
-    <Dialog open={open} onOpenChange={onClose}>
+    <Dialog open={open} onOpenChange={cancelReq}>
       <DialogContent className="max-w-[1004px]">
         <DialogHeader>
           <DialogTitle>Detalhes</DialogTitle>
@@ -183,9 +184,7 @@ export default function ModalEditPDV({ onClose, open, id }: IModalEditPDV) {
                 onFileSelect={(file, previewUrl) => {
                   handleFileSelect('carrouselImage', file, previewUrl);
                 }}
-                actualImage={
-                  carousselFile?.carrouselImage?.previewUrl || undefined
-                }
+                actualImage={actualImage}
                 height={328}
                 width={328}
                 suggestedHeight={300}
@@ -203,7 +202,7 @@ export default function ModalEditPDV({ onClose, open, id }: IModalEditPDV) {
                   </span>
                 </Button>
                 <Button disabled={isPending} type="submit">
-                  <span>Registrar</span>
+                  {isPending ? <ClockLoader size={20} /> : <span>Enviar</span>}
                 </Button>
               </div>
             </div>
