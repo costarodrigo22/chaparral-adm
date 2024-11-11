@@ -34,6 +34,7 @@ export default function About() {
             actualValue={title}
             onContentChange={content => setTitle(content)}
             title="Título"
+            showEditButton
           />
           <InputTypeWYSIWYG
             onIsEditable={handleToggleIsDescEditable}
@@ -41,6 +42,7 @@ export default function About() {
             actualValue={descricao}
             onContentChange={content => setDescricao(content)}
             title="Descrição"
+            showEditButton
           />
         </div>
         <FileUploader

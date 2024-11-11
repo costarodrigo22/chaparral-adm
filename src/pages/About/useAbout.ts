@@ -3,12 +3,11 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 interface infoBody {
-  data: [
+  data:
     {
       title: string;
       description: string;
     },
-  ];
 }
 
 export default function useAbout() {
@@ -42,6 +41,9 @@ export default function useAbout() {
   };
 
   async function handleSendData() {
+    console.log("Enviando dados:", { title, descricao });
+    console.log("fileInstitutional:", fileInstitutional);
+
     const bodyInfo = {
       title: title,
       description: descricao,
@@ -49,26 +51,22 @@ export default function useAbout() {
 
     try {
       setIsLoading(true);
-      await httpClient.post(
-        '/api/v1/home_institutional_section/update_info',
-        bodyInfo,
-      );
 
-      if (fileInstitutional.image && fileInstitutional.image.file) {
+      // Envia título e descrição
+      await httpClient.put('/api/v1/about_header/update', bodyInfo);
+      console.log("Título e descrição enviados com sucesso");
+
+      // Envia a imagem se estiver presente
+      if (fileInstitutional['aboutImage'] && fileInstitutional['aboutImage'].file) {
         const formDataInstitutional = new FormData();
-        formDataInstitutional.append('file', fileInstitutional.image.file);
-
-        await httpClient.post(
-          '/api/v1/home_institutional_section/send_image',
-          formDataInstitutional,
-          {
-            headers: { 'Content-Type': 'multipart/form-data' },
-          },
-        );
+        formDataInstitutional.append('file', fileInstitutional['aboutImage'].file);
+        await httpClient.post('/api/v1/about_header/submit_image', formDataInstitutional);
+        console.log("Imagem enviada com sucesso");
       }
+
       toast.success('Informações enviadas com sucesso!');
     } catch (error) {
-      console.log(error);
+      console.error("Erro ao enviar dados:", error);
       toast.error('Erro ao enviar os dados');
     } finally {
       setIsLoading(false);
@@ -78,19 +76,21 @@ export default function useAbout() {
     }
   }
 
-  async function getBeAPartnersInfo() {
+
+
+  async function getAboutInfo() {
     try {
       setIsLoading(true);
       const infoRes = await httpClient.get<infoBody>(
-        '/api/without/home_institutional_section/index',
+        '/api/without/about_header/get',
       );
       const imageRes = await httpClient.get(
-        '/api/without/home_institutional_section/display_image',
+        '/api/without/about_header/display_image',
       );
 
-      setDescricao(infoRes.data.data[0].description);
-      setTitle(infoRes.data.data[0].title);
-      setImage(imageRes.data);
+      setDescricao(infoRes?.data?.data?.description);
+      setTitle(infoRes?.data?.data?.title);
+      setImage(imageRes?.data);
     } catch (error) {
       toast.error('Erro ao buscar dados!');
       console.log(error);
@@ -100,7 +100,7 @@ export default function useAbout() {
   }
 
   useEffect(() => {
-    getBeAPartnersInfo();
+    getAboutInfo();
   }, []);
 
   return {
@@ -119,7 +119,7 @@ export default function useAbout() {
     setTitle,
     descricao,
     setDescricao,
-    getBeAPartnersInfo,
+    getAboutInfo,
     image,
     setImage,
     fileInstitutional,
