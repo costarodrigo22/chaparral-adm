@@ -1,15 +1,15 @@
-import { httpClient } from "../httpClient";
+import { httpClient } from '../httpClient';
 
 interface IUpdatePickup {
-  name: string,
-  street: string,
-  number: string,
-  neighborhood: string,
-  city: string,
-  cep: string,
-  uf: string,
-  telephone_number: string,
-  operational_time: string,
+  name: string;
+  street: string;
+  number: string;
+  neighborhood: string;
+  city: string;
+  cep: string;
+  uf: string;
+  telephone_number: string;
+  operational_time: string;
 }
 
 export async function addPickup({
@@ -21,7 +21,7 @@ export async function addPickup({
   operational_time,
   street,
   telephone_number,
-  uf
+  uf,
 }: IUpdatePickup) {
   const body = {
     cep,

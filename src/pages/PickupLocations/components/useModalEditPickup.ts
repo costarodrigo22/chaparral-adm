@@ -1,11 +1,11 @@
-import { httpClient } from "@/app/services/httpClient";
-import { PickupsService } from "@/app/services/PickupService";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useCallback, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { z } from "zod";
+import { httpClient } from '@/app/services/httpClient';
+import { PickupsService } from '@/app/services/PickupService';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useCallback, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
 
 export interface infoBody {
   data: {
@@ -47,7 +47,6 @@ const schema = z.object({
 export type PickupData = z.infer<typeof schema>;
 
 export default function useModalEditPickup({ id, onClose }: IModalEditPickup) {
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const {
     register,
@@ -139,5 +138,14 @@ export default function useModalEditPickup({ id, onClose }: IModalEditPickup) {
     reset({});
   }
 
-  return { schema, cancelReq, HandleUpdatePickup, isPending, handleSubmit, register, errors, isLoading  }
+  return {
+    schema,
+    cancelReq,
+    HandleUpdatePickup,
+    isPending,
+    handleSubmit,
+    register,
+    errors,
+    isLoading,
+  };
 }

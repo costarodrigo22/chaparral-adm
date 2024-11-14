@@ -6,13 +6,11 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 
 interface infoBody {
-  data:
-    {
-      title: string;
-      description: string;
-      base64: string;
-    },
-
+  data: {
+    title: string;
+    description: string;
+    base64: string;
+  };
 }
 
 const schema = z.object({
@@ -66,10 +64,7 @@ export default function useSustainability() {
 
     try {
       setIsLoading(true);
-      await httpClient.put(
-        '/api/v1/about_sub_header/update',
-        bodyInfo,
-      );
+      await httpClient.put('/api/v1/about_sub_header/update', bodyInfo);
 
       if (fileSustainability.image && fileSustainability.image.file) {
         const formDataSustainability = new FormData();

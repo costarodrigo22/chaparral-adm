@@ -1,9 +1,9 @@
-import { httpClient } from "@/app/services/httpClient";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { z } from "zod";
+import { httpClient } from '@/app/services/httpClient';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useCallback, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
 
 interface infoBody {
   data: {
@@ -58,7 +58,6 @@ const schema = z.object({
 type BusinessData = z.infer<typeof schema>;
 
 export default function useBusinessProfile() {
-
   const {
     reset,
     register,
@@ -133,5 +132,5 @@ export default function useBusinessProfile() {
     }
   }
 
-  return { handleSendData, isLoading, handleSubmit, register, errors, isDirty, }
+  return { handleSendData, isLoading, handleSubmit, register, errors, isDirty };
 }

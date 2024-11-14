@@ -1,10 +1,10 @@
-import { PickupsService } from "@/app/services/PickupService";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { z } from "zod";
+import { PickupsService } from '@/app/services/PickupService';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
 
 export interface IModalAddPickup {
   open: boolean;
@@ -28,7 +28,6 @@ const schema = z.object({
 export type PickupData = z.infer<typeof schema>;
 
 export default function useModalAddPickup({ onClose }: IModalAddPickup) {
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const {
     register,
@@ -79,12 +78,12 @@ export default function useModalAddPickup({ onClose }: IModalAddPickup) {
     };
 
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await mutateAsync(body);
     } catch (error) {
       console.log(error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 
@@ -93,5 +92,14 @@ export default function useModalAddPickup({ onClose }: IModalAddPickup) {
     reset({});
   }
 
-  return { schema, cancelReq, HandleAddPickup, isPending, handleSubmit, register, errors, isLoading  }
+  return {
+    schema,
+    cancelReq,
+    HandleAddPickup,
+    isPending,
+    handleSubmit,
+    register,
+    errors,
+    isLoading,
+  };
 }

@@ -1,16 +1,16 @@
-import { httpClient } from "../httpClient";
+import { httpClient } from '../httpClient';
 
 interface IUpdatePickup {
-  id: string,
-  name: string,
-  street: string,
-  number: string,
-  neighborhood: string,
-  city: string,
-  cep: string,
-  uf: string,
-  telephone_number: string,
-  operational_time: string,
+  id: string;
+  name: string;
+  street: string;
+  number: string;
+  neighborhood: string;
+  city: string;
+  cep: string;
+  uf: string;
+  telephone_number: string;
+  operational_time: string;
 }
 
 export async function updatePickup({
@@ -23,7 +23,7 @@ export async function updatePickup({
   operational_time,
   street,
   telephone_number,
-  uf
+  uf,
 }: IUpdatePickup) {
   const body = {
     cep,

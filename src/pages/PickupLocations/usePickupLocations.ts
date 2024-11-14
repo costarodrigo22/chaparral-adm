@@ -3,7 +3,6 @@ import { PickupsService } from '@/app/services/PickupService';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-
 export default function usePickupLocations() {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [id, setId] = useState('');
@@ -51,5 +50,22 @@ export default function usePickupLocations() {
       setOpenModalDeletePickup(false);
     }
   }
-  return { handleDeletePickup, isPendingDeletePickup, data, filteredData, headersTable, setOpenAddPickupModal, openAddPickupModal, setOpenEditModal, id, isFetching, openModalDeletePickup, openEditModal, setOpenModalDeletePickup, searchTerm, setId, setSearchTerm  }
+  return {
+    handleDeletePickup,
+    isPendingDeletePickup,
+    data,
+    filteredData,
+    headersTable,
+    setOpenAddPickupModal,
+    openAddPickupModal,
+    setOpenEditModal,
+    id,
+    isFetching,
+    openModalDeletePickup,
+    openEditModal,
+    setOpenModalDeletePickup,
+    searchTerm,
+    setId,
+    setSearchTerm,
+  };
 }
