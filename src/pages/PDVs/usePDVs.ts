@@ -27,7 +27,7 @@ export default function usePDVs() {
       item.name.toLowerCase().includes(searchTerm.toLowerCase()),
     ) || [];
 
-  const { isPending: isPendingDeleteUser, mutateAsync: mutateAsyncDeleteUser } =
+  const { isPending: isPendingDeletePdv, mutateAsync: mutateAsyncDeletePDV } =
     useMutation({
       mutationFn: PDVsService.deletePDV,
       onSuccess: () => {
@@ -42,7 +42,7 @@ export default function usePDVs() {
 
   async function handleDeletePDV() {
     try {
-      await mutateAsyncDeleteUser(id);
+      await mutateAsyncDeletePDV(id);
     } finally {
       setOpenModalDeletePDV(false);
     }
@@ -50,7 +50,7 @@ export default function usePDVs() {
 
   return {
     handleDeletePDV,
-    isPendingDeleteUser,
+    isPendingDeletePdv,
     id,
     data,
     searchTerm,

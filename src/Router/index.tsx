@@ -4,7 +4,6 @@ import { AuthGuard } from './AuthGuard';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import Users from '@/pages/Users';
-import Dashboard from '@/pages/Dashboard';
 import Home from '@/pages/Home';
 import Profile from '@/pages/Profile/inde';
 import Header from '@/pages/Header';
@@ -15,6 +14,9 @@ import PDVs from '@/pages/PDVs';
 import Recipes from '@/pages/Recipes';
 import About from '@/pages/About';
 import MissionValues from '@/pages/MissionValues';
+import BusinessProfile from '@/pages/BusinessProfile';
+import PickupLocations from '@/pages/PickupLocations';
+import Sustainability from '@/pages/Sustainability';
 
 export function Router() {
   return (
@@ -39,9 +41,22 @@ export function Router() {
             <Route path="sections/recipes" element={<Recipes />} />
             <Route path="sections/be-a-partner" element={<BeAPartner />} />
             <Route path="sections/PDVs" element={<PDVs />} />
+            <Route
+              path="sections/sustainability"
+              element={<Sustainability />}
+            />
 
-            <Route path="config/dashboard" element={<Dashboard />} />
+            {/* Configurações da página */}
+            <Route
+              path="config/BusinessProfile"
+              element={<BusinessProfile />}
+            />
             <Route path="config/users" element={<Users />} />
+            <Route
+              path="config/PickupLocations"
+              element={<PickupLocations />}
+            />
+
             <Route path="config/profile" element={<Profile />} />
           </Route>
         </Route>
