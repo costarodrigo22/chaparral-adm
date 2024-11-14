@@ -18,7 +18,7 @@ export default function PDVs() {
     searchTerm,
     headersTable,
     isFetching,
-    isPendingDeleteUser,
+    isPendingDeletePdv,
     openAddModal,
     openEditModal,
     openModalDeletePDV,
@@ -47,7 +47,7 @@ export default function PDVs() {
 
       <ModalConfirm
         open={openModalDeletePDV}
-        isLoading={isPendingDeleteUser}
+        isLoading={isPendingDeletePdv}
         title="Deseja excluir?"
         description="O PDV será excluído permanentemente"
         onClose={() => {
