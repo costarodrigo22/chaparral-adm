@@ -28,6 +28,7 @@ type FormData = z.infer<typeof schema>;
 
 export default function useInstitutional() {
   const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
   const [isImageChanged, setisImageChanged] = useState(false);
   const [isTitleEditable, setIsTitleEditable] = useState(false);
   const [isDescEditable, setIsDescEditable] = useState(false);
@@ -105,9 +106,9 @@ export default function useInstitutional() {
     }
   }
 
-  const getBeAPartnersInfo = useCallback(async () => {
+  const getInstitutionalInfo = useCallback(async () => {
     try {
-      setIsLoading(true);
+      setIsFetching(true);
       const infoRes = await httpClient.get<infoBody>(
         '/api/without/home_institutional_section/index',
       );
@@ -125,13 +126,13 @@ export default function useInstitutional() {
       toast.error('Erro ao buscar dados!');
       console.log(error);
     } finally {
-      setIsLoading(false);
+      setIsFetching(false);
     }
   }, [reset]);
 
   useEffect(() => {
-    getBeAPartnersInfo();
-  }, [getBeAPartnersInfo]);
+    getInstitutionalInfo();
+  }, [getInstitutionalInfo]);
 
   useEffect(() => {
     const subscription = watch((_value, { name }) => {
@@ -149,6 +150,7 @@ export default function useInstitutional() {
     hookFormHandleSubmit,
     handleSendData,
     setisImageChanged,
+    isFetching,
     isImageChanged,
     isLoading,
     handleFileSelect,

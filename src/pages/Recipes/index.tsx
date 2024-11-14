@@ -66,7 +66,7 @@ export default function Recipes() {
   }
 
   return (
-    <section className="my-9 mx-10 flex flex-col gap-9">
+    <section className="my-9 mx-10 flex flex-col gap-9 bg-white dark:bg-black rounded-[10px]">
       <ModalAddRecipes
         key={`${openAddModal}-${isFetching}`}
         onClose={() => setOpenAddModal(false)}
@@ -86,7 +86,7 @@ export default function Recipes() {
         onClose={() => setOpenModalDeleteRecipe(false)}
         onExecute={handleDeletePDV}
       />
-      <header className="flex justify-between bg-white dark:bg-black w-full h-auto py-9 px-8 rounded-[10px] shadow-sections dark:shadow-sectionsDark">
+      <header className="flex justify-between bg-white dark:bg-black w-full h-auto py-9 px-8 rounded-[10px]">
         <div>
           <h2 className="text-[#1E1E1E] dark:text-[#e1e1e1] font-semibold text-lg">
             Receitas
@@ -115,10 +115,10 @@ export default function Recipes() {
           </Button>
         </div>
       </header>
-      <main className="w-full h-auto flex flex-col gap-4">
+      <main className="w-full h-auto flex flex-col gap-4 bg-white dark:bg-black rounded-[10px]">
         {isFetching ? (
-          <div className="w-full h-full flex items-center justify-center">
-            <ClockLoader size={100} color="#ff0000" />
+          <div className="w-full h-full flex items-center justify-center pb-10">
+            <ClockLoader size={40} color="#ff0000" />
           </div>
         ) : filteredData.length > 0 ? (
           <TableApp

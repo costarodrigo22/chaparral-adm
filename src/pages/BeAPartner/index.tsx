@@ -22,43 +22,52 @@ export default function BeAPartner() {
     handleToggleIsTitleEditable,
     setisImageChanged,
     isImageChanged,
+    isFetching,
   } = useBeAPartner();
 
   return (
     <SectionsEditWrapper title="Seja Parceiro">
       <div className="flex gap-8 items-start">
-        <div className="flex flex-col w-[456px] gap-10">
-          <InputTypeWYSIWYG
-            isEditable={isTitleEditable}
-            showEditButton
-            onIsEditable={handleToggleIsTitleEditable}
-            actualValue={title}
-            onContentChange={content => setTitle(content)}
-            title="Título"
-          />
-          <InputTypeWYSIWYG
-            onIsEditable={handleToggleIsDescEditable}
-            isEditable={isDescEditable}
-            showEditButton
-            actualValue={descricao}
-            onContentChange={content => setDescricao(content)}
-            title="Descrição"
-          />
-        </div>
-        <div>
-          <FileUploader
-            title="Imagem"
-            actualImage={image}
-            height={328}
-            onFileSelect={(file, previewUrl) => {
-              handleFileSelect('image', file, previewUrl);
-              setisImageChanged(!isImageChanged);
-            }}
-            width={278}
-            suggestedHeight={785}
-            suggestedWidth={630}
-          />
-        </div>
+        {isFetching ? (
+          <div className="w-full h-full flex items-center justify-center">
+            <ClockLoader size={40} color="#ff0000" />
+          </div>
+        ) : (
+          <>
+            <div className="flex flex-col w-[456px] gap-10">
+              <InputTypeWYSIWYG
+                isEditable={isTitleEditable}
+                showEditButton
+                onIsEditable={handleToggleIsTitleEditable}
+                actualValue={title}
+                onContentChange={content => setTitle(content)}
+                title="Título"
+              />
+              <InputTypeWYSIWYG
+                onIsEditable={handleToggleIsDescEditable}
+                isEditable={isDescEditable}
+                showEditButton
+                actualValue={descricao}
+                onContentChange={content => setDescricao(content)}
+                title="Descrição"
+              />
+            </div>
+            <div>
+              <FileUploader
+                title="Imagem"
+                actualImage={image}
+                height={328}
+                onFileSelect={(file, previewUrl) => {
+                  handleFileSelect('image', file, previewUrl);
+                  setisImageChanged(!isImageChanged);
+                }}
+                width={278}
+                suggestedHeight={785}
+                suggestedWidth={630}
+              />
+            </div>
+          </>
+        )}
       </div>
       <div className="w-full flex items-center justify-end mt-9">
         <Button

@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 
 export default function useHeader() {
   const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
   const [isLogoChanged, setIsLogoChanged] = useState(false);
   const [isFeaturedChanged, setIsFeaturedChanged] = useState(false);
   const [logo, setLogo] = useState('');
@@ -25,7 +26,7 @@ export default function useHeader() {
 
   async function getActualImages() {
     try {
-      setIsLoading(true);
+      setIsFetching(true);
       const logoRes = await httpClient.get(
         '/api/without/home_header/display_image/logo',
       );
@@ -39,7 +40,7 @@ export default function useHeader() {
       toast.error('Erro ao buscar dados!');
       console.log(error);
     } finally {
-      setIsLoading(false);
+      setIsFetching(false);
     }
   }
 
@@ -91,6 +92,7 @@ export default function useHeader() {
     handlePostImages,
     setIsFeaturedChanged,
     setIsLogoChanged,
+    isFetching,
     isLogoChanged,
     isFeaturedChanged,
     isLoading,

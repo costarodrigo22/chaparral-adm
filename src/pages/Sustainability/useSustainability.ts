@@ -22,6 +22,7 @@ type FormData = z.infer<typeof schema>;
 
 export default function useSustainability() {
   const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
   const [isImageChanged, setisImageChanged] = useState(false);
   const [isTitleEditable, setIsTitleEditable] = useState(false);
   const [isDescEditable, setIsDescEditable] = useState(false);
@@ -92,7 +93,7 @@ export default function useSustainability() {
 
   const getSustainability = useCallback(async () => {
     try {
-      setIsLoading(true);
+      setIsFetching(true);
       const infoRes = await httpClient.get<infoBody>(
         '/api/without/about_sub_header/get',
       );
@@ -106,7 +107,7 @@ export default function useSustainability() {
       toast.error('Erro ao buscar dados!');
       console.log(error);
     } finally {
-      setIsLoading(false);
+      setIsFetching(false);
     }
   }, [reset]);
 
@@ -120,6 +121,7 @@ export default function useSustainability() {
     hookFormHandleSubmit,
     handleSendData,
     setisImageChanged,
+    isFetching,
     isImageChanged,
     isLoading,
     handleFileSelect,

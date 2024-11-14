@@ -12,6 +12,7 @@ interface infoBody {
 export default function useAbout() {
   const [title, setTitle] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
   const [isImageChanged, setisImageChanged] = useState(false);
   const [isTitleEditable, setIsTitleEditable] = useState(false);
   const [isDescEditable, setIsDescEditable] = useState(false);
@@ -86,7 +87,7 @@ export default function useAbout() {
 
   async function getAboutInfo() {
     try {
-      setIsLoading(true);
+      setIsFetching(true);
       const infoRes = await httpClient.get<infoBody>(
         '/api/without/about_header/get',
       );
@@ -101,7 +102,7 @@ export default function useAbout() {
       toast.error('Erro ao buscar dados!');
       console.log(error);
     } finally {
-      setIsLoading(false);
+      setIsFetching(false);
     }
   }
 
@@ -121,6 +122,7 @@ export default function useAbout() {
     setIsTitleEditable,
     isDescEditable,
     isTitleEditable,
+    isFetching,
     title,
     setTitle,
     descricao,

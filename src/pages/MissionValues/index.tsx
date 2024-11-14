@@ -21,68 +21,79 @@ export default function MissionValues() {
     hookFormHandleSubmit,
     isLoading,
     isValid,
+    isFetching,
   } = useMissionValues();
 
   return (
     <SectionsEditWrapper title="Missão e Valores">
       <form onSubmit={hookFormHandleSubmit(handleSendData)}>
-        <Controller
-          name="subtitle"
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <InputTypeWYSIWYG
-              isEditable={isSubTitleEditable}
-              onIsEditable={handleToggleIsSubTitleEditable}
-              showEditButton
-              actualValue={value}
-              onContentChange={onChange}
-              title="Subtítulo"
+        {isFetching ? (
+          <div className="w-full h-full flex items-center justify-center">
+            <ClockLoader size={40} color="#ff0000" />
+          </div>
+        ) : (
+          <>
+            <Controller
+              name="subtitle"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <InputTypeWYSIWYG
+                  isEditable={isSubTitleEditable}
+                  onIsEditable={handleToggleIsSubTitleEditable}
+                  showEditButton
+                  actualValue={value}
+                  onContentChange={onChange}
+                  title="Subtítulo"
+                />
+              )}
             />
-          )}
-        />
-        {errors.subtitle && (
-          <p className="text-red-500 mt-[-50px]">{errors.subtitle.message}</p>
+            {errors.subtitle && (
+              <p className="text-red-500 mt-[-50px]">
+                {errors.subtitle.message}
+              </p>
+            )}
+            <div className="flex w-full flex-col h-full gap-9">
+              <Controller
+                name="missionDesc"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <InputTypeWYSIWYG
+                    isEditable={isMissionDescEditable}
+                    onIsEditable={handleToggleIsMissionDescEditable}
+                    showEditButton
+                    actualValue={value}
+                    onContentChange={onChange}
+                    title="Descrição (Missão)"
+                  />
+                )}
+              />
+              {errors.missionDesc && (
+                <p className="text-red-500 mt-[-50px]">
+                  {errors.missionDesc.message}
+                </p>
+              )}
+              <Controller
+                name="valuesDesc"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <InputTypeWYSIWYG
+                    isEditable={isValuesDescEditable}
+                    onIsEditable={handleToggleIsValuesDescEditable}
+                    showEditButton
+                    actualValue={value}
+                    onContentChange={onChange}
+                    title="Descrição (Valores)"
+                  />
+                )}
+              />
+              {errors.valuesDesc && (
+                <p className="text-red-500 mt-[-50px]">
+                  {errors.valuesDesc.message}
+                </p>
+              )}
+            </div>
+          </>
         )}
-        <div className="flex w-full flex-col h-full gap-9">
-          <Controller
-            name="missionDesc"
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <InputTypeWYSIWYG
-                isEditable={isMissionDescEditable}
-                onIsEditable={handleToggleIsMissionDescEditable}
-                showEditButton
-                actualValue={value}
-                onContentChange={onChange}
-                title="Descrição (Missão)"
-              />
-            )}
-          />
-          {errors.missionDesc && (
-            <p className="text-red-500 mt-[-50px]">
-              {errors.missionDesc.message}
-            </p>
-          )}
-          <Controller
-            name="valuesDesc"
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <InputTypeWYSIWYG
-                isEditable={isValuesDescEditable}
-                onIsEditable={handleToggleIsValuesDescEditable}
-                showEditButton
-                actualValue={value}
-                onContentChange={onChange}
-                title="Descrição (Valores)"
-              />
-            )}
-          />
-          {errors.valuesDesc && (
-            <p className="text-red-500 mt-[-50px]">
-              {errors.valuesDesc.message}
-            </p>
-          )}
-        </div>
         <div className="w-full flex items-center justify-end mt-9">
           <Button
             className="flex gap-3 items-center"
