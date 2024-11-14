@@ -17,6 +17,7 @@ interface MissionValuesResponse {
 }
 export default function useMissionValues() {
   const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
   const [isMissionDescEditable, setIsMissionDescEditable] = useState(false);
   const [isSubTitleEditable, setIsSubTitleEditable] = useState(false);
   const [isValuesDescEditable, setIsValuesDescEditable] = useState(false);
@@ -49,7 +50,7 @@ export default function useMissionValues() {
 
   const getAboutInfo = useCallback(async () => {
     try {
-      setIsLoading(true);
+      setIsFetching(true);
       const infoRes = await httpClient.get<MissionValuesResponse>(
         '/api/without/about_mission_and_values/get',
       );
@@ -62,7 +63,7 @@ export default function useMissionValues() {
       toast.error('Erro ao buscar dados!');
       console.error('Erro ao buscar dados:', error);
     } finally {
-      setIsLoading(false);
+      setIsFetching(false);
     }
   }, [reset]);
 
@@ -94,6 +95,7 @@ export default function useMissionValues() {
   return {
     handleSendData,
     control,
+    isFetching,
     errors,
     isValid,
     hookFormHandleSubmit,

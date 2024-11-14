@@ -1,5 +1,5 @@
 import { httpClient } from '@/app/services/httpClient';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 interface infoBody {
@@ -14,6 +14,7 @@ interface infoBody {
 export default function useBeAPartner() {
   const [title, setTitle] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setFetching] = useState(false);
   const [isImageChanged, setisImageChanged] = useState(false);
   const [isTitleEditable, setIsTitleEditable] = useState(false);
   const [isDescEditable, setIsDescEditable] = useState(false);
@@ -79,9 +80,9 @@ export default function useBeAPartner() {
     }
   }
 
-  async function getBeAPartnersInfo() {
+  const getBeAPartnersInfo = useCallback(async () => {
     try {
-      setIsLoading(true);
+      setFetching(true);
       const infoRes = await httpClient.get<infoBody>(
         '/api/without/home_be_a_partner_section/index',
       );
@@ -96,15 +97,16 @@ export default function useBeAPartner() {
       toast.error('Erro ao buscar dados!');
       console.log(error);
     } finally {
-      setIsLoading(false);
+      setFetching(false);
     }
-  }
+  }, [setFetching]);
 
   useEffect(() => {
     getBeAPartnersInfo();
-  }, []);
+  }, [getBeAPartnersInfo]);
 
   return {
+    isFetching,
     handleSendData,
     setisImageChanged,
     isImageChanged,

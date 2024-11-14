@@ -12,6 +12,7 @@ export default function About() {
     image,
     isDescEditable,
     isImageChanged,
+    isFetching,
     isLoading,
     isTitleEditable,
     title,
@@ -27,36 +28,44 @@ export default function About() {
   return (
     <SectionsEditWrapper title="Sobre">
       <div className="flex flex-col gap-8">
-        <div className="max-w-[514px] flex flex-col gap-8">
-          <InputTypeWYSIWYG
-            isEditable={isTitleEditable}
-            onIsEditable={handleToggleIsTitleEditable}
-            actualValue={title}
-            onContentChange={content => setTitle(content)}
-            title="Título"
-            showEditButton
-          />
-          <InputTypeWYSIWYG
-            onIsEditable={handleToggleIsDescEditable}
-            isEditable={isDescEditable}
-            actualValue={descricao}
-            onContentChange={content => setDescricao(content)}
-            title="Descrição"
-            showEditButton
-          />
-        </div>
-        <FileUploader
-          actualImage={image}
-          onFileSelect={(file, previewUrl) => {
-            handleFileSelect('aboutImage', file, previewUrl);
-            setisImageChanged(!isImageChanged);
-          }}
-          title="Imagem"
-          height={328}
-          width={514}
-          suggestedHeight={810}
-          suggestedWidth={1440}
-        />
+        {isFetching ? (
+          <div className="w-full h-full flex items-center justify-center">
+            <ClockLoader size={40} color="#ff0000" />
+          </div>
+        ) : (
+          <>
+            <div className="max-w-[514px] flex flex-col gap-8">
+              <InputTypeWYSIWYG
+                isEditable={isTitleEditable}
+                onIsEditable={handleToggleIsTitleEditable}
+                actualValue={title}
+                onContentChange={content => setTitle(content)}
+                title="Título"
+                showEditButton
+              />
+              <InputTypeWYSIWYG
+                onIsEditable={handleToggleIsDescEditable}
+                isEditable={isDescEditable}
+                actualValue={descricao}
+                onContentChange={content => setDescricao(content)}
+                title="Descrição"
+                showEditButton
+              />
+            </div>
+            <FileUploader
+              actualImage={image}
+              onFileSelect={(file, previewUrl) => {
+                handleFileSelect('aboutImage', file, previewUrl);
+                setisImageChanged(!isImageChanged);
+              }}
+              title="Imagem"
+              height={328}
+              width={514}
+              suggestedHeight={810}
+              suggestedWidth={1440}
+            />
+          </>
+        )}
       </div>
       <div className="w-full flex items-center justify-end mt-9">
         <Button

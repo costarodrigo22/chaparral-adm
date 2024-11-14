@@ -68,9 +68,11 @@ export default function useBusinessProfile() {
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
 
   const handleGetData = useCallback(async () => {
     try {
+      setIsFetching(true);
       const res = await httpClient.get<infoBody>(
         '/api/without/company_profile/get',
       );
@@ -97,6 +99,8 @@ export default function useBusinessProfile() {
     } catch (error) {
       console.log(error);
       toast.error('Ocorreu um erro ao buscar os dados.');
+    } finally {
+      setIsFetching(false);
     }
   }, [reset]);
 
@@ -132,5 +136,13 @@ export default function useBusinessProfile() {
     }
   }
 
-  return { handleSendData, isLoading, handleSubmit, register, errors, isDirty };
+  return {
+    handleSendData,
+    isLoading,
+    isFetching,
+    handleSubmit,
+    register,
+    errors,
+    isDirty,
+  };
 }

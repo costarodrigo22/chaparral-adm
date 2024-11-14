@@ -20,6 +20,7 @@ export default function Sustainability() {
     handleToggleIsTitleEditable,
     setisImageChanged,
     control,
+    isFetching,
     errors,
     hookFormHandleSubmit,
   } = useSustainability();
@@ -28,56 +29,66 @@ export default function Sustainability() {
     <SectionsEditWrapper title="Sustentabilidade">
       <form onSubmit={hookFormHandleSubmit(handleSendData)}>
         <div className="flex flex-col gap-8">
-          <div className="max-w-[514px] flex flex-col gap-8">
-            <Controller
-              name="title"
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <InputTypeWYSIWYG
-                  isEditable={isTitleEditable}
-                  onIsEditable={handleToggleIsTitleEditable}
-                  showEditButton
-                  actualValue={value}
-                  onContentChange={onChange}
-                  title="Título"
+          {isFetching ? (
+            <div className="w-full h-full flex items-center justify-center">
+              <ClockLoader size={40} color="#ff0000" />
+            </div>
+          ) : (
+            <>
+              <div className="max-w-[514px] flex flex-col gap-8">
+                <Controller
+                  name="title"
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <InputTypeWYSIWYG
+                      isEditable={isTitleEditable}
+                      onIsEditable={handleToggleIsTitleEditable}
+                      showEditButton
+                      actualValue={value}
+                      onContentChange={onChange}
+                      title="Título"
+                    />
+                  )}
                 />
-              )}
-            />
-            {errors.title && (
-              <p className=" mt-[-40px] text-red-500">{errors.title.message}</p>
-            )}
-            <Controller
-              name="description"
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <InputTypeWYSIWYG
-                  onIsEditable={handleToggleIsDescEditable}
-                  isEditable={isDescEditable}
-                  showEditButton
-                  actualValue={value}
-                  onContentChange={onChange}
-                  title="Descrição"
+                {errors.title && (
+                  <p className=" mt-[-40px] text-red-500">
+                    {errors.title.message}
+                  </p>
+                )}
+                <Controller
+                  name="description"
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <InputTypeWYSIWYG
+                      onIsEditable={handleToggleIsDescEditable}
+                      isEditable={isDescEditable}
+                      showEditButton
+                      actualValue={value}
+                      onContentChange={onChange}
+                      title="Descrição"
+                    />
+                  )}
                 />
-              )}
-            />
-            {errors.description && (
-              <p className=" mt-[-40px] text-red-500">
-                {errors.description.message}
-              </p>
-            )}
-          </div>
-          <FileUploader
-            actualImage={image}
-            onFileSelect={(file, previewUrl) => {
-              handleFileSelect('image', file, previewUrl);
-              setisImageChanged(!isImageChanged);
-            }}
-            title="Imagem"
-            height={328}
-            width={514}
-            suggestedHeight={810}
-            suggestedWidth={1440}
-          />
+                {errors.description && (
+                  <p className=" mt-[-40px] text-red-500">
+                    {errors.description.message}
+                  </p>
+                )}
+              </div>
+              <FileUploader
+                actualImage={image}
+                onFileSelect={(file, previewUrl) => {
+                  handleFileSelect('image', file, previewUrl);
+                  setisImageChanged(!isImageChanged);
+                }}
+                title="Imagem"
+                height={328}
+                width={514}
+                suggestedHeight={810}
+                suggestedWidth={1440}
+              />
+            </>
+          )}
         </div>
         <div className="w-full flex items-center justify-end mt-9">
           <Button

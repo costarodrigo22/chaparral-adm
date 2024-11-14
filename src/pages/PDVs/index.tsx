@@ -29,7 +29,7 @@ export default function PDVs() {
   } = usePDVs();
 
   return (
-    <section className="my-9 mx-10 flex flex-col gap-9">
+    <section className="my-9 mx-10 flex flex-col gap-9 bg-white dark:bg-black rounded-[10px]">
       <ModalAddPDVs
         onClose={() => {
           setOpenAddModal(false);
