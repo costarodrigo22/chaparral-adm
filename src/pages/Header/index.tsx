@@ -22,7 +22,7 @@ export default function Header() {
   return (
     <div className="w-full flex items-center justify-center">
       <SectionsEditWrapper title="Imagens">
-        <div className="w-full flex xl:items-end h-full flex-col xl:flex-row xl:justify-start gap-10 xl:gap-28">
+        <div className="w-full flex flex-col h-full gap-10 xl:gap-28">
           {isFetching ? (
             <div className="flex items-center justify-center w-full h-full">
               <ClockLoader size={40} color="#f00" />
@@ -49,8 +49,8 @@ export default function Header() {
                   handleFileSelect('PapelDeParede', file, previewUrl);
                   setIsFeaturedChanged(true);
                 }}
-                height={192}
-                width={342}
+                height={400}
+                width={720}
                 title="Papel de parede"
               />
             </>
