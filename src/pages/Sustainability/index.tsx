@@ -82,10 +82,10 @@ export default function Sustainability() {
                   setisImageChanged(!isImageChanged);
                 }}
                 title="Imagem"
-                height={328}
-                width={514}
-                suggestedHeight={810}
-                suggestedWidth={1440}
+                height={400}
+                width={305}
+                suggestedHeight={800}
+                suggestedWidth={610}
               />
             </>
           )}

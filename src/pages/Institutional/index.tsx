@@ -85,8 +85,8 @@ export default function Institutional() {
                 setisImageChanged(!isImageChanged);
               }}
               title="Imagem"
-              height={328}
-              width={514}
+              height={405}
+              width={720}
               suggestedHeight={810}
               suggestedWidth={1440}
             />

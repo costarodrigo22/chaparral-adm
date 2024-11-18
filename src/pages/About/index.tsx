@@ -26,7 +26,7 @@ export default function About() {
   } = useAbout();
 
   return (
-    <SectionsEditWrapper title="Sobre">
+    <SectionsEditWrapper title="História">
       <div className="flex flex-col gap-8">
         {isFetching ? (
           <div className="w-full h-full flex items-center justify-center">
@@ -59,9 +59,9 @@ export default function About() {
                 setisImageChanged(!isImageChanged);
               }}
               title="Imagem"
-              height={328}
-              width={514}
-              suggestedHeight={810}
+              height={315}
+              width={720}
+              suggestedHeight={630}
               suggestedWidth={1440}
             />
           </>
