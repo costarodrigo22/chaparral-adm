@@ -19,6 +19,8 @@ export default function MissionValues() {
     handleToggleIsSubTitleEditable,
     handleToggleIsValuesDescEditable,
     hookFormHandleSubmit,
+    handleToggleIsVisionDescEditable,
+    isVisionDescEditable,
     isLoading,
     isValid,
     isFetching,
@@ -73,6 +75,26 @@ export default function MissionValues() {
                 </p>
               )}
               <Controller
+                name="valuesVision"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <InputTypeWYSIWYG
+                    isEditable={isVisionDescEditable}
+                    onIsEditable={handleToggleIsVisionDescEditable}
+                    showEditButton
+                    actualValue={value}
+                    onContentChange={onChange}
+                    title="Descrição (Visão)"
+                  />
+                )}
+              />
+              {errors.valuesDesc && (
+                <p className="text-red-500 mt-[-50px]">
+                  {errors.valuesDesc.message}
+                </p>
+              )}
+
+              <Controller
                 name="valuesDesc"
                 control={control}
                 render={({ field: { onChange, value } }) => (
@@ -103,7 +125,8 @@ export default function MissionValues() {
               !(
                 isMissionDescEditable ||
                 isValuesDescEditable ||
-                isSubTitleEditable
+                isSubTitleEditable ||
+                isVisionDescEditable
               ) ||
               !isValid
             }

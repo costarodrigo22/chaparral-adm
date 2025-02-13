@@ -9,6 +9,7 @@ interface MissionValuesResponse {
   data: {
     id: string;
     featured_description: string;
+    vision_description: string;
     mission_description: string;
     values_description: string;
     created_at: string;
@@ -21,6 +22,7 @@ export default function useMissionValues() {
   const [isMissionDescEditable, setIsMissionDescEditable] = useState(false);
   const [isSubTitleEditable, setIsSubTitleEditable] = useState(false);
   const [isValuesDescEditable, setIsValuesDescEditable] = useState(false);
+  const [isVisionDescEditable, setIsVisionDescEditable] = useState(false);
 
   const handleToggleIsMissionDescEditable = () =>
     setIsMissionDescEditable(!isMissionDescEditable);
@@ -28,11 +30,14 @@ export default function useMissionValues() {
     setIsSubTitleEditable(!isSubTitleEditable);
   const handleToggleIsValuesDescEditable = () =>
     setIsValuesDescEditable(!isValuesDescEditable);
+  const handleToggleIsVisionDescEditable = () =>
+    setIsVisionDescEditable(!isVisionDescEditable);
 
   const schema = z.object({
     missionDesc: z.string().min(1, 'Descrição da missão é obrigatória'),
     subtitle: z.string().min(1, 'Subtítulo é obrigatório'),
     valuesDesc: z.string().min(1, 'Descrição dos valores é obrigatória'),
+    valuesVision: z.string().min(1, 'Descrição da visão obrigatória'),
   });
 
   type FormData = z.infer<typeof schema>;
@@ -58,6 +63,7 @@ export default function useMissionValues() {
         missionDesc: infoRes.data.data.mission_description,
         valuesDesc: infoRes.data.data.values_description,
         subtitle: infoRes.data.data.featured_description,
+        valuesVision: infoRes.data.data.vision_description,
       });
     } catch (error) {
       toast.error('Erro ao buscar dados!');
@@ -77,6 +83,7 @@ export default function useMissionValues() {
       featured_description: data.subtitle,
       mission_description: data.missionDesc,
       values_description: data.valuesDesc,
+      vision_description: data.valuesVision,
     };
     try {
       await httpClient.put('/api/v1/about_mission_and_values/update', body);
@@ -102,6 +109,8 @@ export default function useMissionValues() {
     handleToggleIsMissionDescEditable,
     handleToggleIsSubTitleEditable,
     handleToggleIsValuesDescEditable,
+    handleToggleIsVisionDescEditable,
+    isVisionDescEditable,
     isLoading,
     isSubTitleEditable,
     isMissionDescEditable,
